@@ -1,6 +1,6 @@
-model_name = "ibm/granite-3-2-8b-instruct"
+model_name = "ibm/granite-3-2-8b-instruct" #"ibm/Mixtral-8x7B-Instruct-v0.1"
 model_parameters = {
-        "max_new_tokens": 100,
+        "max_new_tokens": 200,
         "decoding_method": "greedy",
         "temperature": 0.9,
         "repetition_penalty": 1.0,
