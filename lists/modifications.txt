@@ -1,0 +1,52 @@
+Add new key-value pairs
+Remove key-value pairs
+Modify existing values
+Modify existing keys
+Duplicate values with different keys
+Convert type_x to type_y
+Convert an dictionary to an array # remove the key from the dictionary and keep the value
+Convert an array to an dictionary
+Convert a null value to a valid data type
+Convert a number to a boolean (0 → false, 1 → true)
+Convert boolean to number (true → 1, false → 0)
+Convert a flat structure into a nested structure
+Flatten a nested structure into a flat structure
+Group multiple related properties into an object
+Split an object into multiple smaller objects
+Extract a property from an object and move it up
+Merge multiple objects into a single object
+Move an object into an array
+Move an array into an object
+Minify JSON (remove all spaces and line breaks for compact storage)
+Prettify JSON (format with indentation for readability)
+Sort keys alphabetically
+Reorder keys for logical readability
+Standardize data types across entries
+Remove unnecessary whitespace in string values
+Add elements to an array
+Remove elements from an array
+Reorder elements in an array
+Remove duplicates from an array
+Convert an array into separate key-value pairs
+Merge multiple arrays into a single array
+Split an array into multiple smaller arrays
+Transform array values (e.g., capitalize all strings, round numbers, etc.)
+Sort array elements alphabetically or numerically
+Rename a key across the entire JSON file
+Replace a key with another key dynamically
+Ensure all objects contain the same set of keys (even if some values are null)
+Remove empty keys (where the value is null, "", or {})
+Find and replace a specific value across the entire JSON file
+Convert specific words/values to a different format (e.g., lowercase all strings, round all numbers)
+Mask sensitive values (e.g., replace email with ***@domain.com)
+Obfuscate or anonymize certain values (e.g., hash IDs, replace names with pseudonyms)
+Apply mathematical operations to numeric values (e.g., increase all prices by 10%)
+Merge multiple JSON files into one
+Split a large JSON file into multiple smaller ones
+Filter JSON based on conditions (e.g., remove all objects where "status": "inactive")
+Map JSON to a new structure (e.g., change "first_name" to "firstName")
+Reduce JSON to only specific keys (e.g., keep only "id", "name", "email")
+Generate new fields dynamically (e.g., create "fullName" from "firstName" + "lastName")
+Convert timestamps to human-readable dates
+Group data by specific criteria (e.g., group users by country)
+Remove trailing commas (common mistake in JSON editing)

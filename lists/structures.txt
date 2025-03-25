@@ -1,0 +1,20 @@
+Basic Item List: A straightforward, one-level list where each entry includes properties like ID, name, and description.
+Expandable Lists: Each list item can include its own nested list, allowing for layered detail and navigation.
+Tree Structure: Organizes data in parent-child relationships, forming a branching hierarchy across multiple levels.
+Optional Attributes: Fields that aren’t required, giving flexibility in what information is included.
+Conditional Attributes: Fields that only appear when certain criteria are met, streamlining user input and interfaces.
+List of Similar Objects: A collection where each item shares a consistent structure, useful for storing repeated data sets.
+Interdependent Fields: Field values that change based on selections in other fields, enabling smart and dynamic forms.
+Table Format: Information arranged in rows and columns, making it easy to compare data across multiple items.
+Map Structure (Key-Value): Each entry pairs a key with a value, ideal for lookup-style data storage.
+Nested Structures: A main object that includes embedded objects, supporting layered and organized data.
+Relational Links: Items that reference other items by ID or URI, allowing connected and interrelated data sets.
+Matrix Format: Arrays within arrays, used for representing complex grids or multi-level structured data.
+Flexible Field Types: Fields that can store different kinds of data—such as numbers, strings, or structured objects.
+Grouped Attributes: Related fields are bundled under a single property, making data cleaner and more organized.
+Paginated Format: Data is broken into multiple pages with navigation info like current page and total item count.
+Category-Based Grouping: Items are sorted into categories, each acting as a container for related entries.
+Chronological Entries: Data entries include a timestamp, supporting time-based tracking and trends.
+Flat Data Model: A simple layout with no nested objects; all attributes exist at the same top level.
+Node-Based Hierarchy: A data layout where each item can have child nodes, forming a recursive tree model.
+Dynamic Schema: A structure where fields and their rules are defined at runtime, offering maximum adaptability.
