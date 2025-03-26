@@ -1,7 +1,7 @@
 Basic Item List: A straightforward, one-level list where each entry includes properties like ID, name, and description.
 Expandable Lists: Each list item can include its own nested list, allowing for layered detail and navigation.
 Tree Structure: Organizes data in parent-child relationships, forming a branching hierarchy across multiple levels.
-Optional Attributes: Fields that aren’t required, giving flexibility in what information is included.
+Optional Attributes: Fields that are not required, giving flexibility in what information is included.
 Conditional Attributes: Fields that only appear when certain criteria are met, streamlining user input and interfaces.
 List of Similar Objects: A collection where each item shares a consistent structure, useful for storing repeated data sets.
 Interdependent Fields: Field values that change based on selections in other fields, enabling smart and dynamic forms.
