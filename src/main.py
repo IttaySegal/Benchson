@@ -20,7 +20,7 @@ json_prompt = PromptTemplate(
 )
 json_chain = json_prompt | llm | JsonOutputParser()
 
-structure = get_random_structure()
+structure = "Basic Item List" #get_random_structure()
 topic = get_random_theme()
 num_of_tokens = random.randint(30, 100)
 
