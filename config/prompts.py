@@ -93,13 +93,3 @@ The response must follow this format:
 Description of Modification: <One sentence describing what was changed>""",
         input_variables=["before", "after"]
     )
-
-
-if __name__ == "__main__":
-    # Example: Using the json_generator_human_prompt function directly as a PromptTemplate.
-    json_gen_template = input_modification_generator_prompt().input_variables
-    print(json_gen_template)
-
-    # Fill the template with sample values
-
-    # print(json_schema_human_prompt())
