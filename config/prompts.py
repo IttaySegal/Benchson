@@ -1,36 +1,21 @@
-from dataclasses import dataclass, field
-from typing import List, Dict
-
 from langchain_core.prompts import PromptTemplate
 
 
-@dataclass
-class Prompt:
-    template: str
-    input_variables: List[str] = field(default_factory=list)
-
-    def to_prompt_template(self) -> PromptTemplate:
-        """
-        Converts this Prompt instance to a LangChain PromptTemplate.
-        """
-        return PromptTemplate(
-            input_variables=self.input_variables,
-            template=self.template
-        )
-
-
-# Define your prompts dictionary
-prompts: Dict[str, Prompt] = {
-    "schema_system_prompt": Prompt(
+def schema_system_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""You are an assistant designed to generate JSON schemas based on given story structures and themes."""
-    ),
-    "valid_schema_human_prompt": Prompt(
+    )
+
+def valid_schema_human_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""Generate a valid JSON Schema. The schema must conform to the JSON Schema Draft-07 standard and include the following elements: 
 1. Specify the `$schema` field as "http://json-schema.org/draft-07/schema#" to define the version. 
 2. Use valid properties such as `type`, `properties`, `required`, and `items` for objects and arrays. 
 3. Ensure all fields are properly defined with their types, and use constraints like `minLength`, `maximum`, or `enum` only when applicable."""
-    ),
-    "json_schema_human_prompt": Prompt(
+    )
+
+def json_schema_human_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""Generate a valid JSON Schema about {theme} with the following structure format: {structure}
 - The schema should be valid.
 - The schema should include 20-40 fields.
@@ -40,8 +25,10 @@ prompts: Dict[str, Prompt] = {
 Your response must contain only the JSON Schema. Do not include any descriptions, explanations, or additional text.
 Return the schema as a string.""",
         input_variables=["theme", "structure"]
-    ),
-    "simple_json_schema": Prompt(
+    )
+
+def simple_json_schema() -> PromptTemplate:
+    return PromptTemplate(
         template="""{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
@@ -52,38 +39,50 @@ Return the schema as a string.""",
   },
   "required": ["name", "age"]
 }"""
-    ),
-    "json_generator_system_prompt": Prompt(
+    )
+
+def json_generator_system_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""You are an AI designed to generate long and complex JSON instances based on a provided JSON schema. 
 The schema defines the structure, types, and constraints for JSON objects. 
 Always ensure the generated JSON is strictly valid according to the schema."""
-    ),
-    "json_generator_human_prompt": Prompt(
+    )
+
+def json_generator_human_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""Using the following schema 
 {schema}
 Create the {number} valid JSON instance that strictly adheres to the schema's rules, including constraints like required fields, field types, and specified formats.
 Ensure the JSON instance is varied but fully compliant with the schema.
 Your response must contain only the JSON. Do not include any descriptions, explanations, or additional text.""",
         input_variables=["schema", "number"]
-    ),
-    "json_modification_system_prompt": Prompt(
+    )
+
+def json_modification_system_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""You are an assistant tasked with receiving a valid JSON instance and applying a deliberate modification based on the provided instruction.
 Your task is to update the JSON instance while preserving the overall structure unless the instruction requires significant changes.
 Always ensure the updated output is strictly valid JSON using double quotes for keys and strings."""
-    ),
-    "json_modification_human_prompt": Prompt(
+    )
+
+def json_modification_human_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""Using the following valid JSON instance {json_instance}, please apply the following modification: {instruction}.
 Return only the updated JSON instance. Do not include any descriptions, explanations, or additional text.""",
         input_variables=["json_instance", "instruction"]
-    ),
-    "input_modification_generator_prompt": Prompt(
+    )
+
+def input_modification_generator_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""You are an assistant that simulates user queries for help with modifying JSON files. Your task is to generate a user-style query based on the desired modification.
 Your response must:
 1. Appear as though the user is asking for assistance in modifying their JSON file.
 2. Include only an introductory query description from the user, focusing on the type of modification they need.
 3. Avoid including any JSON content or referencing specific JSON instances in the response."""
-    ),
-    "description_output_modification_prompt": Prompt(
+    )
+
+def description_output_modification_prompt() -> PromptTemplate:
+    return PromptTemplate(
         template="""You are an assistant that explains the modifications made to a JSON file.
 Given the following original JSON:
 {before}
@@ -93,5 +92,14 @@ Provide a brief description of the modifications made to the JSON.
 The response must follow this format:
 Description of Modification: <One sentence describing what was changed>""",
         input_variables=["before", "after"]
-    ),
-}
+    )
+
+
+if __name__ == "__main__":
+    # Example: Using the json_generator_human_prompt function directly as a PromptTemplate.
+    json_gen_template = input_modification_generator_prompt().input_variables
+    print(json_gen_template)
+
+    # Fill the template with sample values
+
+    # print(json_schema_human_prompt())
