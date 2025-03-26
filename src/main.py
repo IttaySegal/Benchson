@@ -13,17 +13,17 @@ llm = WatsonxLLM(
 )
 
 json_prompt = PromptTemplate(
-    input_variables=["structure", "topic"],
-    template="Can you create a JSON file for me in a {structure} structure on the topic of {topic}?"
+    input_variables=["structure", "topic", "num_of_tokens"],
+    template="Can you create a JSON file for me in a {structure} structure on the topic of {topic}, Maximum length {num_of_tokens} tokens?"
 )
 json_chain = json_prompt | llm | JsonOutputParser()
 
-json_res = json_chain.invoke({"structure": "music", "topic": "education"})
+json_res = json_chain.invoke({"structure": "basic", "topic": "education", "num_of_tokens": "50"})
 print(f"JSON: {json_res}")
 
 modify_prompt = PromptTemplate(
     input_variables=["json_data", "instruction"],
-    template="Here is a JSON object:\n{json_data}\nPlease {instruction}, and return only the updated JSON object"
+    template="Here is a JSON object:\n{json_data}\nPlease {instruction}, and return only the updated JSON object without any further explanation"
 )
 modify_chain = modify_prompt | llm | StrOutputParser()
 
