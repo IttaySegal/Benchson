@@ -33,10 +33,13 @@ def strict_json_schema_human_prompt() -> PromptTemplate:
     return PromptTemplate(
         template="""Generate a valid JSON Schema about {theme} with the following structure format: {structure}
         - The schema must conform to the JSON Schema Draft-07 standard.
-        - The schema should include between 20 and 40 fields.
+        - The schema should include between 20 and 40 fields, ensuring a diverse range of types, including:
+          - `string`, `integer`, `number`, `boolean`, `array`, `dictionary` and `object`.
         - All fields must be explicitly defined with correct types using the `type` keyword.
-        - Do not change the type of any value from the original structure.
-        - Use constraints like `minLength`, `maximum`, or `enum` only when applicable.
+        - Ensure at least one field of each type (`string`, `integer`, `number`, `boolean`, `array`, `object`) is present.
+        - Do not change the type of any value from the original structure if specified.
+        - Use constraints like `minLength`, `maximum`, `enum`, `minItems`, `maxItems`, or `required` only when applicable.
+        - Include arrays with a valid `items` definition and objects with nested properties when relevant.
         - Disallow any properties not explicitly defined by setting `"additionalProperties": false` in all object definitions.
         - Specify the `$schema` field as "http://json-schema.org/draft-07/schema#".
         Your response must contain only the JSON Schema. Do not include any explanations, descriptions, or additional text.
@@ -95,14 +98,25 @@ def json_modification_system_prompt() -> PromptTemplate:
         Always ensure the updated output is strictly valid JSON using double quotes for keys and strings."""
     )
 
+# def json_modification_human_prompt() -> PromptTemplate:
+#     return PromptTemplate(
+#         template="""Using the following valid JSON instance {json_instance}, please apply the following modification: {instruction}.
+#         Return only the updated valid JSON instance. Do not include any descriptions, explanations, or additional text.""",
+#         input_variables=["json_instance", "instruction"]
+#     )
+
 def json_modification_human_prompt() -> PromptTemplate:
     return PromptTemplate(
-        template="""Using the following valid JSON instance {json_instance}, please apply the following modification: {instruction}.
-        Return only the updated valid JSON instance. Do not include any descriptions, explanations, or additional text.""",
-        input_variables=["json_instance", "instruction"]
+        template="""Using the following valid JSON instance: {json_instance}
+        Apply the following modification: {instruction}
+        Return only the updated *valid JSON*.
+        - Ensure all keys and string values are enclosed in double quotes.
+        - Do NOT return Python-style output (e.g., single quotes or capitalized keys).
+        - Do NOT wrap the output in markdown (e.g., ```json).
+        - Do NOT include any explanations or comments — return the JSON instance only.
+        - If the requested modification cannot be applied to the provided JSON instance (e.g., attempting to append to a non-existent array), return the original JSON instance unchanged.""",
+    input_variables=["json_instance", "instruction"]
     )
-
-
 
 def input_modification_generator_prompt() -> PromptTemplate:
     return PromptTemplate(

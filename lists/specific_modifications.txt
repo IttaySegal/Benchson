@@ -1,10 +1,17 @@
-Remove key-value pair
-Modify the value of an existing string
-Modify existing value integer
-Modify existing value float
-Modify existing value dictionary
-Modify existing value array
-reorder an array
-Modify existing value boolean
-add new value in an existing array
-remove value from an existing array
+Remove a key-value pair: Delete a specified key and its corresponding value from an object.
+Modify string value: Change the value of an existing key where the value is a string.
+Modify integer value: Change the value of an existing key where the value is an integer.
+Modify float value: Change the value of an existing key where the value is a float.
+Modify boolean value: Change the value of an existing key where the value is a boolean (true or false).
+Modify dictionary value: Change the contents of an existing key where the value is a nested dictionary (object).
+Modify array value: Change the contents of an existing key where the value is an array (list).
+Reorder an existing array: Change the order of elements within an existing array.
+Add a new value to an existing array: Append a new element to an existing array.
+Remove a value from an existing array: Delete a specified element from an existing array.
+Update numeric value by increment or decrement: Change an integer or float value by adding or subtracting a specific amount, staying within allowed limits.
+Concatenate string values: Append or prepend additional text to an existing string without altering its type or purpose.
+Capitalize or format string values: Modify the format of a string, such as changing case (uppercase/lowercase) or applying title case.
+Sort array elements: Arrange elements within an array in a specific order, such as alphabetical, numerical, or custom-defined.
+Reverse array elements: Rearrange elements in an array so that their order is flipped from end to start.
+Merge two arrays: Combine two arrays into a single array without violating the schema’s limits for array length or content type.
+Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.
