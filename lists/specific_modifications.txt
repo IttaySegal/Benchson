@@ -1,0 +1,10 @@
+Remove key-value pair
+Modify the value of an existing string
+Modify existing value integer
+Modify existing value float
+Modify existing value dictionary
+Modify existing value array
+reorder an array
+Modify existing value boolean
+add new value in an existing array
+remove value from an existing array

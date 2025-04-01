@@ -16,7 +16,8 @@ class LLMJsonGenerator:
         )
 
     def json_schema_generator(self, theme, structure):
-        prompt = prompts.json_schema_human_prompt()
+        # prompt = prompts.json_schema_human_prompt()
+        prompt = prompts.strict_json_schema_human_prompt()
         chain = prompt | self.llm | JsonOutputParser()
         json_schema = chain.invoke({
             "theme": theme,
@@ -33,16 +34,21 @@ class LLMJsonGenerator:
         return json
 
     def modified_json_generator(self, original_json, modification_type):
+        generate_modification = self.input_generator(original_json, modification_type)
         chain = prompts.json_modification_human_prompt() | self.llm | JsonOutputParser()
         modified_json = chain.invoke({
             "json_instance": original_json,
-            "instruction": modification_type #self.input_generator(original_json, modification_type)
+            "instruction": generate_modification #self.input_generator(original_json, modification_type)
         })
         return modified_json
 
     def input_generator(self, original_json, modification_type):
         chain = prompts.input_modification_generator_prompt() | self.llm | StrOutputParser()
-        input_prompt = chain.invoke({})
+        input_prompt = chain.invoke({
+            "original_json": original_json,
+            "modification_type": modification_type
+        })
+        print(f'input prompt: {input_prompt}')
         return input_prompt
 
     def description_output_generator(self, original_json, modified_json):

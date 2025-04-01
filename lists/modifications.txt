@@ -1,37 +1,30 @@
-Add new key-value pairs
-Remove key-value pairs
-Modify existing values
-Modify existing keys
+Add new key-value pair
+Remove key-value pair
+Modify existing value
+Rename a key
+
+
+
+
 Duplicate values with different keys
-Convert type_x to type_y
-Convert an dictionary to an array # remove the key from the dictionary and keep the value
-Convert an array to an dictionary
-Convert a null value to a valid data type
+Convert a string value into an integer
+Convert all string values that represents number into floats or integers
+Convert a dictionary to an array
+Convert an array to a dictionary
+Change format of all keys to another format
 Convert a number to a boolean (0 → false, 1 → true)
 Convert boolean to number (true → 1, false → 0)
 Convert a flat structure into a nested structure
 Flatten a nested structure into a flat structure
 Group multiple related properties into an object
 Split an object into multiple smaller objects
-Extract a property from an object and move it up
-Merge multiple objects into a single object
-Move an object into an array
-Move an array into an object
-Minify JSON (remove all spaces and line breaks for compact storage)
-Prettify JSON (format with indentation for readability)
-Sort keys alphabetically
-Reorder keys for logical readability
-Standardize data types across entries
-Remove unnecessary whitespace in string values
 Add elements to an array
 Remove elements from an array
-Reorder elements in an array
 Remove duplicates from an array
 Convert an array into separate key-value pairs
 Merge multiple arrays into a single array
 Split an array into multiple smaller arrays
 Transform array values (e.g., capitalize all strings, round numbers, etc.)
-Sort array elements alphabetically or numerically
 Rename a key across the entire JSON file
 Replace a key with another key dynamically
 Ensure all objects contain the same set of keys (even if some values are null)

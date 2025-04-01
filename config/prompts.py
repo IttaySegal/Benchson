@@ -6,12 +6,42 @@ def schema_system_prompt() -> PromptTemplate:
         template="""You are an assistant designed to generate JSON schemas based on given story structures and themes."""
     )
 
-def valid_schema_human_prompt() -> PromptTemplate:
+# def strict_valid_schema_human_prompt() -> PromptTemplate:
+#     return PromptTemplate(
+#         template="""Generate a valid JSON Schema that conforms to the JSON Schema Draft-07 standard. The schema must meet the following requirements:
+#
+#         1. Specify the `$schema` field as "http://json-schema.org/draft-07/schema#" to define the version.
+#         2. Use valid keywords such as `type`, `properties`, `required`, and `items` to define object and array structures.
+#         3. All fields must be explicitly defined with their correct data types using the `type` keyword.
+#         4. Apply constraints such as `minLength`, `maximum`, `enum`, `format`, or others only when appropriate.
+#         5. Use `"additionalProperties": false` to ensure that no extra key-value pairs are allowed beyond those explicitly defined.
+#         6. Do not include any fields or structures that are not explicitly described in the provided structure.
+#         7. The schema must enforce strict typing: types must not be changed or left ambiguous.
+#
+#         Generate only the JSON Schema as output."""
+#     )
+
+# def valid_schema_human_prompt() -> PromptTemplate:
+#     return PromptTemplate(
+#         template="""Generate a valid JSON Schema. The schema must conform to the JSON Schema Draft-07 standard and include the following elements:
+#         1. Specify the `$schema` field as "http://json-schema.org/draft-07/schema#" to define the version.
+#         2. Use valid properties such as `type`, `properties`, `required`, and `items` for objects and arrays.
+#         3. Ensure all fields are properly defined with their types, and use constraints like `minLength`, `maximum`, or `enum` only when applicable."""
+#     )
+
+def strict_json_schema_human_prompt() -> PromptTemplate:
     return PromptTemplate(
-        template="""Generate a valid JSON Schema. The schema must conform to the JSON Schema Draft-07 standard and include the following elements: 
-        1. Specify the `$schema` field as "http://json-schema.org/draft-07/schema#" to define the version. 
-        2. Use valid properties such as `type`, `properties`, `required`, and `items` for objects and arrays. 
-        3. Ensure all fields are properly defined with their types, and use constraints like `minLength`, `maximum`, or `enum` only when applicable."""
+        template="""Generate a valid JSON Schema about {theme} with the following structure format: {structure}
+        - The schema must conform to the JSON Schema Draft-07 standard.
+        - The schema should include between 20 and 40 fields.
+        - All fields must be explicitly defined with correct types using the `type` keyword.
+        - Do not change the type of any value from the original structure.
+        - Use constraints like `minLength`, `maximum`, or `enum` only when applicable.
+        - Disallow any properties not explicitly defined by setting `"additionalProperties": false` in all object definitions.
+        - Specify the `$schema` field as "http://json-schema.org/draft-07/schema#".
+        Your response must contain only the JSON Schema. Do not include any explanations, descriptions, or additional text.
+        Return the schema as a string.""",
+        input_variables=["theme", "structure"]
     )
 
 def json_schema_human_prompt() -> PromptTemplate:
@@ -50,7 +80,7 @@ def json_generator_system_prompt() -> PromptTemplate:
 
 def json_generator_human_prompt() -> PromptTemplate:
     return PromptTemplate(
-        template="""Using the following schema 
+        template="""Using the following schema
         {schema}
         Create the {number} valid JSON instance that strictly adheres to the schema's rules, including constraints like required fields, field types, and specified formats.
         Ensure the JSON instance is varied but fully compliant with the schema.
@@ -68,17 +98,21 @@ def json_modification_system_prompt() -> PromptTemplate:
 def json_modification_human_prompt() -> PromptTemplate:
     return PromptTemplate(
         template="""Using the following valid JSON instance {json_instance}, please apply the following modification: {instruction}.
-        Return only the updated JSON instance. Do not include any descriptions, explanations, or additional text.""",
+        Return only the updated valid JSON instance. Do not include any descriptions, explanations, or additional text.""",
         input_variables=["json_instance", "instruction"]
     )
 
+
+
 def input_modification_generator_prompt() -> PromptTemplate:
     return PromptTemplate(
-        template="""You are an assistant that simulates user queries for help with modifying JSON files. Your task is to generate a user-style query based on the desired modification.
-        Your response must:
-        1. Appear as though the user is asking for assistance in modifying their JSON file.
-        2. Include only an introductory query description from the user, focusing on the type of modification they need.
-        3. Avoid including any JSON content or referencing specific JSON instances in the response."""
+        template="""You are simulating a user giving an instruction to modify a JSON object.
+        original JSON (for reference only, do not include in output):
+        {original_json}
+        Desired modification: {modification_type}
+        Write a direct instruction from the user to an assistant that clearly describes the modification they want to make.
+        Only output the instruction, without any explanation or formatting.""",
+        input_variables=["original_json", "modification_type"]
     )
 
 def description_output_modification_prompt() -> PromptTemplate:
