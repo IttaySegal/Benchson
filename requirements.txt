@@ -1,0 +1,2 @@
+langchain-ibm==0.3.8
+langchain-core~=0.3.47
