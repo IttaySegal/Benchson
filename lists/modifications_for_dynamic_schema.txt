@@ -1,0 +1,5 @@
+Add a new key-value pair: Insert a new key-value pair into an existing object.
+Rename a key: Change the name of an existing key without altering its value.
+Merge two objects: Combine the properties of two objects, with priority given to specified keys if conflicts arise.
+Split an object: Break down an object into multiple smaller objects based on specified criteria.
+Apply conditional updates: Modify keys or values based on a specified condition

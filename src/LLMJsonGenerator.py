@@ -15,9 +15,17 @@ class LLMJsonGenerator:
             params=model_parameters
         )
 
-    def json_schema_generator(self, theme, structure):
-        # prompt = prompts.json_schema_human_prompt()
+    def strict_json_schema_generator(self, theme, structure):
         prompt = prompts.strict_json_schema_human_prompt()
+        chain = prompt | self.llm | JsonOutputParser()
+        json_schema = chain.invoke({
+            "theme": theme,
+            "structure": structure
+        })
+        return json_schema
+
+    def dynamic_json_schema_generator(self, theme, structure):
+        prompt = prompts.dynamic_json_schema_human_prompt()
         chain = prompt | self.llm | JsonOutputParser()
         json_schema = chain.invoke({
             "theme": theme,
@@ -33,12 +41,20 @@ class LLMJsonGenerator:
         })
         return json
 
-    def modified_json_generator(self, original_json, modification_type):
-        generate_modification = self.input_generator(original_json, modification_type)
+    # def modified_json_generator(self, original_json, modification_type):
+    #     generate_modification = self.input_generator(original_json, modification_type)
+    #     chain = prompts.json_modification_human_prompt() | self.llm | JsonOutputParser()
+    #     modified_json = chain.invoke({
+    #         "json_instance": original_json,
+    #         "instruction": generate_modification #self.input_generator(original_json, modification_type)
+    #     })
+    #     return modified_json
+
+    def modified_json_generator(self, original_json, instruction):
         chain = prompts.json_modification_human_prompt() | self.llm | JsonOutputParser()
         modified_json = chain.invoke({
             "json_instance": original_json,
-            "instruction": generate_modification #self.input_generator(original_json, modification_type)
+            "instruction": instruction
         })
         return modified_json
 
@@ -48,8 +64,8 @@ class LLMJsonGenerator:
             "original_json": original_json,
             "modification_type": modification_type
         })
-        print(f'input prompt: {input_prompt}')
-        return input_prompt
+        # print(f'input prompt: {input_prompt}')
+        return input_prompt.strip().strip('"').strip()
 
     def description_output_generator(self, original_json, modified_json):
         chain = prompts.description_output_modification_prompt() | self.llm | StrOutputParser()
@@ -57,4 +73,4 @@ class LLMJsonGenerator:
             "before": original_json,
             "after": modified_json
         })
-        return description_output
+        return description_output.strip().strip('"').strip()

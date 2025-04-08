@@ -1,95 +1,55 @@
-Mythology
-Space Colonization
-Astrobiology
+Books
+Movies
+Music Albums
+Video Games
+Recipes
+Sports Teams
+Products
+Events
+E-commerce Orders
+Educational Courses
+Podcasts
+Blog Posts
+Animals
+Cars
+Artworks
+Learning Algorithms
 Cybersecurity
-Virtual Identity
-Post-Humanism
+Cryptocurrency
 Machine Consciousness
 Digital Art
-Eco-Philosophy
-Futurism
-Cryptocurrency
-Cognitive Science
 Bioethics
-Speculative Fiction
-Alien Intelligence
-Transhumanism
-Memory and Identity
-Digital Legacy
-Ethnography
-Rituals and Belief Systems
-Nomadic Lifestyles
-Digital Nomads
-Smart Cities
-Open-Source Culture
+Artificial Intelligence
+Virtual Identity
 Decentralization
 Disaster Resilience
-Moral Psychology
-Learning Algorithms
+Smart Cities
+Cognitive Science
 Evolutionary Psychology
-Mindfulness in Tech
-Sensorial Design
-Emotional Intelligence
-Cybernetics
-Philosophy of Mind
-Time Perception
-Historical Narratives
-Epistemology
-Consciousness Studies
-Existentialism
-Language Evolution
 Gamification
-Immersive Storytelling
 Synthetic Biology
 Science Communication
-Alternative Economies
-Civic Tech
-Post-Apocalyptic Futures
-Dreams and the Subconscious
-Remote Work Culture
-Digital Twins
-Biohacking
-Ocean Exploration
-Space-Time Theories
-Simulated Realities
-Ethics of Enhancement
-Global Citizenship
-Emotional Wellbeing
-Hybrid Realities
-Crowdsourced Knowledge
-Deep Ecology
-Ethnobotany
-Temporal Anomalies
-Future of Language
-Neurodiversity
 Digital Democracy
-Interdisciplinary Thinking
-Digital Anthropology
-The Philosophy of Play
-Utopian and Dystopian Thought
-Global Myths and Folklore
-Participatory Design
-Atmospheric Science
-Biosphere and Beyond
-Planetary Ethics
 Autonomous Systems
-Virtual Companionship
-Interdisciplinary Art
-Ethics of Automation
-The Philosophy of Nature
-Future Rituals
-Rewilding
-Narrative Ethics
-Decolonizing Knowledge
-Alternative Realities
-The Psychology of Technology
-Microbiomes and Health
-Emotion in AI
-Digital Minimalism
+Digital Twins
+Crowdsourced Knowledge
+Hybrid Learning Environments
 Neuroscience of Creativity
 Longevity Science
-Slow Living
-Hybrid Learning Environments
 Community Resilience
-Cultural Memory
-The Evolution of Workspaces
+Emotional Intelligence in AI
+Sensorial Design
+Philosophy of Mind
+Epistemology
+Digital Anthropology
+Ethics of Automation
+Alternative Economies
+Interdisciplinary Thinking
+Digital Minimalism
+Memory and Identity
+Remote Work Culture
+Open-Source Culture
+Global Citizenship
+Ethics of Enhancement
+Ocean Exploration
+Immersive Storytelling
