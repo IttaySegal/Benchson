@@ -1,0 +1,48 @@
+{
+  "data": {
+    "title": "The Great Gatsby",
+    "author": {
+      "first_name": "F. Scott",
+      "last_name": "Fitzgerald",
+      "birth_date": "1896-09-24"
+    },
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5
+      },
+      {
+        "reviewer_name": "Jane Smith",
+        "rating": 4
+      }
+    ]
+  },
+  "instructions": "Set the price to 12.99",
+  "ground_truth": {
+    "title": "The Great Gatsby",
+    "author": {
+      "first_name": "F. Scott",
+      "last_name": "Fitzgerald",
+      "birth_date": "1896-09-24"
+    },
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "price": 12.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5
+      },
+      {
+        "reviewer_name": "Jane Smith",
+        "rating": 4
+      }
+    ]
+  },
+  "modification": "The price was changed from 10.99 to 12.99."
+}

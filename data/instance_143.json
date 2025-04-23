@@ -1,0 +1,59 @@
+{
+  "data": {
+    "book_id": "12345",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "page_count": 180,
+    "rating": 4.2,
+    "is_available": true,
+    "keywords": [
+      "Classic",
+      "American Literature",
+      "1920s"
+    ],
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "review_text": "A timeless classic that captures the essence of the American Dream.",
+        "rating": 5
+      },
+      {
+        "reviewer_name": "Jane Smith",
+        "review_text": "Beautifully written and thought-provoking.",
+        "rating": 4.5
+      }
+    ]
+  },
+  "instructions": "Add a new keyword 'Novel' to the keywords array.",
+  "ground_truth": {
+    "book_id": "12345",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "page_count": 180,
+    "rating": 4.2,
+    "is_available": true,
+    "keywords": [
+      "Classic",
+      "American Literature",
+      "1920s",
+      "Novel"
+    ],
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "review_text": "A timeless classic that captures the essence of the American Dream.",
+        "rating": 5
+      },
+      {
+        "reviewer_name": "Jane Smith",
+        "review_text": "Beautifully written and thought-provoking.",
+        "rating": 4.5
+      }
+    ]
+  },
+  "modification": "A keyword 'Novel' was added to the 'keywords' list."
+}

@@ -34,6 +34,10 @@ def generate_valid_data(theme, structure, modifications_path, output_folder):
             continue
 
         # Modify JSON
+        if modification_type == "Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.":
+            instruction = generator.input_generator(origin_json, "Add duplicate elements to an array: Insert one or more values that are already present in the array to create duplicates.")
+            origin_json = generator.modified_json_generator(origin_json, instruction)
+
         instruction = generator.input_generator(origin_json, modification_type)
         modified_json = generator.modified_json_generator(origin_json, instruction)
 

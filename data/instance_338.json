@@ -1,0 +1,60 @@
+{
+  "data": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_color": true,
+    "cast": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "languages": [
+      "English"
+    ],
+    "production_company": "Warner Bros.",
+    "budget": 160000000,
+    "revenue": 829895144,
+    "awards": [
+      {
+        "award_name": "Best Visual Effects"
+      },
+      {
+        "award_name": "Best Sound Mixing"
+      }
+    ]
+  },
+  "instructions": "Change the cast to include Tom Hardy and remove Elliot Page.",
+  "ground_truth": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_color": true,
+    "cast": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Tom Hardy"
+    ],
+    "languages": [
+      "English"
+    ],
+    "production_company": "Warner Bros.",
+    "budget": 160000000,
+    "revenue": 829895144,
+    "awards": [
+      {
+        "award_name": "Best Visual Effects"
+      },
+      {
+        "award_name": "Best Sound Mixing"
+      }
+    ]
+  },
+  "modification": "Elliot Page was replaced with Tom Hardy in the cast."
+}

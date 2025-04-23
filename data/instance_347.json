@@ -1,0 +1,60 @@
+{
+  "data": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_color": true,
+    "cast": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "languages": [
+      "English"
+    ],
+    "production_company": "Warner Bros.",
+    "budget": 160000000,
+    "revenue": 829895144,
+    "awards": [
+      {
+        "award_name": "Best Visual Effects"
+      },
+      {
+        "award_name": "Best Sound Mixing"
+      }
+    ]
+  },
+  "instructions": "Remove any duplicate elements from the 'cast' array.",
+  "ground_truth": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_color": true,
+    "cast": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "languages": [
+      "English"
+    ],
+    "production_company": "Warner Bros.",
+    "budget": 160000000,
+    "revenue": 829895144,
+    "awards": [
+      {
+        "award_name": "Best Visual Effects"
+      },
+      {
+        "award_name": "Best Sound Mixing"
+      }
+    ]
+  },
+  "modification": "No modification was made."
+}

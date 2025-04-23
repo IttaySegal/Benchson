@@ -1,0 +1,34 @@
+{
+  "data": {
+    "book_details": {
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "isbn": "9780743273565",
+      "publication_year": 1925,
+      "genre": "Fiction",
+      "language": "English",
+      "page_count": 180,
+      "cover_type": "Paperback"
+    },
+    "availability": {
+      "in_stock": true
+    }
+  },
+  "instructions": "Change the value of in_stock to false.",
+  "ground_truth": {
+    "book_details": {
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "isbn": "9780743273565",
+      "publication_year": 1925,
+      "genre": "Fiction",
+      "language": "English",
+      "page_count": 180,
+      "cover_type": "Paperback"
+    },
+    "availability": {
+      "in_stock": false
+    }
+  },
+  "modification": "The value of 'in_stock' was changed from True to False."
+}

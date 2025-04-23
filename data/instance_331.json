@@ -1,0 +1,54 @@
+{
+  "data": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_released": true,
+    "cast": [
+      {
+        "actor_name": "Leonardo DiCaprio",
+        "character_name": "Cobb"
+      },
+      {
+        "actor_name": "Joseph Gordon-Levitt",
+        "character_name": "Arthur"
+      }
+    ],
+    "awards": [
+      {
+        "award_name": "Academy Award for Best Cinematography",
+        "year": 2011
+      }
+    ]
+  },
+  "instructions": "Remove any duplicate elements from the 'cast' array.",
+  "ground_truth": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_released": true,
+    "cast": [
+      {
+        "actor_name": "Leonardo DiCaprio",
+        "character_name": "Cobb"
+      },
+      {
+        "actor_name": "Joseph Gordon-Levitt",
+        "character_name": "Arthur"
+      }
+    ],
+    "awards": [
+      {
+        "award_name": "Academy Award for Best Cinematography",
+        "year": 2011
+      }
+    ]
+  },
+  "modification": "No modification was made."
+}

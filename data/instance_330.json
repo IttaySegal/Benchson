@@ -1,0 +1,52 @@
+{
+  "data": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_released": true,
+    "cast": [
+      {
+        "actor_name": "Leonardo DiCaprio",
+        "character_name": "Cobb"
+      },
+      {
+        "actor_name": "Joseph Gordon-Levitt",
+        "character_name": "Arthur"
+      }
+    ],
+    "awards": [
+      {
+        "award_name": "Academy Award for Best Cinematography",
+        "year": 2011
+      }
+    ]
+  },
+  "instructions": "Merge the cast and awards arrays into a single array called 'details'.",
+  "ground_truth": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_released": true,
+    "details": [
+      {
+        "actor_name": "Leonardo DiCaprio",
+        "character_name": "Cobb"
+      },
+      {
+        "actor_name": "Joseph Gordon-Levitt",
+        "character_name": "Arthur"
+      },
+      {
+        "award_name": "Academy Award for Best Cinematography",
+        "year": 2011
+      }
+    ]
+  },
+  "modification": "The 'cast' and 'awards' keys were removed and replaced with a 'details' key that combines their values."
+}

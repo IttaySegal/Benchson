@@ -1,0 +1,38 @@
+{
+  "data": {
+    "title": "The Great Gatsby",
+    "author": {
+      "first_name": "F. Scott",
+      "last_name": "Fitzgerald",
+      "birth_date": "1896-09-24"
+    },
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "isbn": "9780743273565",
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5,
+        "comment": "A timeless classic!"
+      }
+    ]
+  },
+  "instructions": "Remove the review by John Doe from the reviews array.",
+  "ground_truth": {
+    "title": "The Great Gatsby",
+    "author": {
+      "first_name": "F. Scott",
+      "last_name": "Fitzgerald",
+      "birth_date": "1896-09-24"
+    },
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "isbn": "9780743273565",
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": []
+  },
+  "modification": "The review by John Doe was removed."
+}

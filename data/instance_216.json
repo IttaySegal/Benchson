@@ -1,0 +1,49 @@
+{
+  "data": {
+    "current_page": 1,
+    "total_pages": 1,
+    "total_items": 1,
+    "items_per_page": 1,
+    "books": [
+      {
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "isbn": "9780743273565",
+        "published_date": "1925-04-10",
+        "genre": "Fiction",
+        "price": 10.99,
+        "rating": 4.5,
+        "in_stock": true,
+        "reviews": [
+          {
+            "reviewer_name": "John Doe"
+          }
+        ]
+      }
+    ]
+  },
+  "instructions": "Remove the isbn key and its value from the book object.",
+  "ground_truth": {
+    "current_page": 1,
+    "total_pages": 1,
+    "total_items": 1,
+    "items_per_page": 1,
+    "books": [
+      {
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "published_date": "1925-04-10",
+        "genre": "Fiction",
+        "price": 10.99,
+        "rating": 4.5,
+        "in_stock": true,
+        "reviews": [
+          {
+            "reviewer_name": "John Doe"
+          }
+        ]
+      }
+    ]
+  },
+  "modification": "The 'isbn' field was removed from the book object."
+}

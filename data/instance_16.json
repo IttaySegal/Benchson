@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "The Great Gatsby",
+      "description": "A novel set in the Roaring Twenties about the mysterious millionaire Jay Gatsby.",
+      "author": "F. Scott Fitzgerald",
+      "published_year": 1925,
+      "genre": "Fiction",
+      "price": 10.99,
+      "in_stock": true,
+      "ratings": [
+        4.5,
+        5,
+        4.8
+      ],
+      "reviews": [
+        {
+          "reviewer_name": "John Doe"
+        },
+        {
+          "reviewer_name": "Jane Smith"
+        }
+      ]
+    }
+  ],
+  "instructions": "Combine the ratings and reviews arrays into a single array called 'feedback'.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "The Great Gatsby",
+      "description": "A novel set in the Roaring Twenties about the mysterious millionaire Jay Gatsby.",
+      "author": "F. Scott Fitzgerald",
+      "published_year": 1925,
+      "genre": "Fiction",
+      "price": 10.99,
+      "in_stock": true,
+      "feedback": [
+        4.5,
+        5,
+        4.8,
+        {
+          "reviewer_name": "John Doe"
+        },
+        {
+          "reviewer_name": "Jane Smith"
+        }
+      ]
+    }
+  ],
+  "modification": "The 'ratings' key was replaced with the 'feedback' key, combining ratings and reviews."
+}

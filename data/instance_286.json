@@ -1,0 +1,66 @@
+{
+  "data": {
+    "title": "The Great Adventure",
+    "author": "John Doe",
+    "published_year": 2020,
+    "isbn": "9781234567890",
+    "genre": "Fiction",
+    "price": 19.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "Alice",
+        "rating": 5,
+        "comment": "A thrilling read!"
+      },
+      {
+        "reviewer_name": "Bob",
+        "rating": 4,
+        "comment": "Enjoyed it thoroughly."
+      }
+    ],
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "chapter_title": "The Beginning"
+      },
+      {
+        "chapter_number": 2,
+        "chapter_title": "The Journey"
+      }
+    ]
+  },
+  "instructions": "Change the published year to 2021.",
+  "ground_truth": {
+    "title": "The Great Adventure",
+    "author": "John Doe",
+    "published_year": 2021,
+    "isbn": "9781234567890",
+    "genre": "Fiction",
+    "price": 19.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "Alice",
+        "rating": 5,
+        "comment": "A thrilling read!"
+      },
+      {
+        "reviewer_name": "Bob",
+        "rating": 4,
+        "comment": "Enjoyed it thoroughly."
+      }
+    ],
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "chapter_title": "The Beginning"
+      },
+      {
+        "chapter_number": 2,
+        "chapter_title": "The Journey"
+      }
+    ]
+  },
+  "modification": "The 'published_year' was changed from 2020 to 2021."
+}

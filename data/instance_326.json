@@ -1,0 +1,54 @@
+{
+  "data": {
+    "title": "Inception",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_released": true,
+    "cast": [
+      {
+        "actor_name": "Leonardo DiCaprio",
+        "character_name": "Cobb"
+      },
+      {
+        "actor_name": "Joseph Gordon-Levitt",
+        "character_name": "Arthur"
+      }
+    ],
+    "awards": [
+      {
+        "award_name": "Academy Award",
+        "year": 2011
+      }
+    ]
+  },
+  "instructions": "Append ' - A Christopher Nolan Film' to the title.",
+  "ground_truth": {
+    "title": "Inception - A Christopher Nolan Film",
+    "release_year": 2010,
+    "director": "Christopher Nolan",
+    "genre": "Sci-Fi",
+    "duration": 148,
+    "rating": 8.8,
+    "is_released": true,
+    "cast": [
+      {
+        "actor_name": "Leonardo DiCaprio",
+        "character_name": "Cobb"
+      },
+      {
+        "actor_name": "Joseph Gordon-Levitt",
+        "character_name": "Arthur"
+      }
+    ],
+    "awards": [
+      {
+        "award_name": "Academy Award",
+        "year": 2011
+      }
+    ]
+  },
+  "modification": "The title was changed to 'Inception - A Christopher Nolan Film'."
+}

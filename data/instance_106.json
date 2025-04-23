@@ -1,0 +1,44 @@
+{
+  "data": {
+    "title": "The Great Gatsby",
+    "author": {
+      "first_name": "F. Scott",
+      "last_name": "Fitzgerald",
+      "birth_date": "1896-09-24"
+    },
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "isbn": "9780743273565",
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5,
+        "comment": "A timeless classic!"
+      }
+    ]
+  },
+  "instructions": "Change the author's last name to Hemingway.",
+  "ground_truth": {
+    "title": "The Great Gatsby",
+    "author": {
+      "first_name": "F. Scott",
+      "last_name": "Hemingway",
+      "birth_date": "1896-09-24"
+    },
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "isbn": "9780743273565",
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5,
+        "comment": "A timeless classic!"
+      }
+    ]
+  },
+  "modification": "The author's last name was changed from 'Fitzgerald' to 'Hemingway'."
+}

@@ -1,0 +1,54 @@
+{
+  "data": {
+    "categories": [
+      {
+        "category_name": "Fiction",
+        "books": [
+          {
+            "title": "The Great Gatsby",
+            "author": "F. Scott Fitzgerald",
+            "isbn": "9780743273565",
+            "published_year": 1925,
+            "price": 10.99,
+            "in_stock": true,
+            "genre": "Fiction",
+            "rating": 4.5,
+            "reviews": [
+              {
+                "reviewer_name": "John Doe",
+                "review_text": "A classic novel that captures the essence of the American Dream."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "instructions": "Change the reviewer name to Jane Doe.",
+  "ground_truth": {
+    "categories": [
+      {
+        "category_name": "Fiction",
+        "books": [
+          {
+            "title": "The Great Gatsby",
+            "author": "F. Scott Fitzgerald",
+            "isbn": "9780743273565",
+            "published_year": 1925,
+            "price": 10.99,
+            "in_stock": true,
+            "genre": "Fiction",
+            "rating": 4.5,
+            "reviews": [
+              {
+                "reviewer_name": "Jane Doe",
+                "review_text": "A classic novel that captures the essence of the American Dream."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "modification": "The reviewer name was changed from 'John Doe' to 'Jane Doe'."
+}

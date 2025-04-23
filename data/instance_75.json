@@ -1,0 +1,51 @@
+{
+  "data": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "isbn": "9780743273565",
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5,
+        "comment": "A timeless classic!"
+      },
+      {
+        "reviewer_name": "Jane Smith",
+        "rating": 4,
+        "comment": "Great read, highly recommended."
+      }
+    ]
+  },
+  "instructions": "Add a new review with reviewer_name 'Alice Johnson', rating 3, and comment 'It was okay, not my favorite.'",
+  "ground_truth": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "isbn": "9780743273565",
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5,
+        "comment": "A timeless classic!"
+      },
+      {
+        "reviewer_name": "Jane Smith",
+        "rating": 4,
+        "comment": "Great read, highly recommended."
+      },
+      {
+        "reviewer_name": "Alice Johnson",
+        "rating": 3,
+        "comment": "It was okay, not my favorite."
+      }
+    ]
+  },
+  "modification": "A new review by Alice Johnson was added."
+}

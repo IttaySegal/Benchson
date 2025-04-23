@@ -1,0 +1,46 @@
+{
+  "data": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "isbn": "9780743273565",
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5,
+        "comment": "A timeless classic!"
+      },
+      {
+        "reviewer_name": "Jane Smith",
+        "rating": 4,
+        "comment": "Great read, highly recommended."
+      }
+    ]
+  },
+  "instructions": "Sort the reviews by rating in descending order.",
+  "ground_truth": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Fiction",
+    "publication_year": 1925,
+    "isbn": "9780743273565",
+    "price": 10.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "rating": 5,
+        "comment": "A timeless classic!"
+      },
+      {
+        "reviewer_name": "Jane Smith",
+        "rating": 4,
+        "comment": "Great read, highly recommended."
+      }
+    ]
+  },
+  "modification": "No modification was made."
+}

@@ -1,0 +1,64 @@
+{
+  "data": [
+    [
+      {
+        "book_id": 1,
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "genre": "Fiction",
+        "published_year": 1925,
+        "price": 10.99,
+        "in_stock": true,
+        "ratings": [
+          4.5,
+          4.0,
+          3.5
+        ],
+        "reviews": [
+          {
+            "reviewer_name": "John Doe",
+            "review_text": "A classic novel that captures the essence of the American Dream.",
+            "rating": 4.5
+          },
+          {
+            "reviewer_name": "Jane Smith",
+            "review_text": "Beautifully written and thought-provoking.",
+            "rating": 4.0
+          }
+        ]
+      }
+    ]
+  ],
+  "instructions": "Reorder the ratings array in descending order.",
+  "ground_truth": [
+    [
+      {
+        "book_id": 1,
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "genre": "Fiction",
+        "published_year": 1925,
+        "price": 10.99,
+        "in_stock": true,
+        "ratings": [
+          4.5,
+          4.0,
+          3.5
+        ],
+        "reviews": [
+          {
+            "reviewer_name": "John Doe",
+            "review_text": "A classic novel that captures the essence of the American Dream.",
+            "rating": 4.5
+          },
+          {
+            "reviewer_name": "Jane Smith",
+            "review_text": "Beautifully written and thought-provoking.",
+            "rating": 4.0
+          }
+        ]
+      }
+    ]
+  ],
+  "modification": "No modification was made."
+}

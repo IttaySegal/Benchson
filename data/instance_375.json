@@ -1,0 +1,40 @@
+{
+  "data": {
+    "title": "Inception",
+    "release_year": 2010,
+    "genre": "Sci-Fi",
+    "director": "Christopher Nolan",
+    "cast": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "duration": 148,
+    "rating": 8.8,
+    "synopsis": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+    "language": "English",
+    "country": "USA",
+    "budget": 160000000,
+    "revenue": 829895144
+  },
+  "instructions": "Change the title to uppercase.",
+  "ground_truth": {
+    "title": "INCEPTION",
+    "release_year": 2010,
+    "genre": "Sci-Fi",
+    "director": "Christopher Nolan",
+    "cast": [
+      "Leonardo DiCaprio",
+      "Joseph Gordon-Levitt",
+      "Elliot Page"
+    ],
+    "duration": 148,
+    "rating": 8.8,
+    "synopsis": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+    "language": "English",
+    "country": "USA",
+    "budget": 160000000,
+    "revenue": 829895144
+  },
+  "modification": "The title was changed to uppercase."
+}

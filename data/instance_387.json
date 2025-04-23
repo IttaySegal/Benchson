@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "title": "Inception",
+      "release_year": 2010,
+      "director": "Christopher Nolan",
+      "genre": "Sci-Fi",
+      "duration": 148,
+      "rating": 8.8,
+      "cast": [
+        "Leonardo DiCaprio",
+        "Joseph Gordon-Levitt",
+        "Elliot Page"
+      ],
+      "synopsis": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+      "budget": 160000000,
+      "revenue": 829895144,
+      "language": "English",
+      "country": "USA"
+    }
+  ],
+  "instructions": "Add 'Tom Hardy' to the cast of Inception.",
+  "ground_truth": [
+    {
+      "title": "Inception",
+      "release_year": 2010,
+      "director": "Christopher Nolan",
+      "genre": "Sci-Fi",
+      "duration": 148,
+      "rating": 8.8,
+      "cast": [
+        "Leonardo DiCaprio",
+        "Joseph Gordon-Levitt",
+        "Elliot Page",
+        "Tom Hardy"
+      ],
+      "synopsis": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+      "budget": 160000000,
+      "revenue": 829895144,
+      "language": "English",
+      "country": "USA"
+    }
+  ],
+  "modification": "Tom Hardy was added to the cast."
+}

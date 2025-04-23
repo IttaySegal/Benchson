@@ -1,0 +1,46 @@
+{
+  "data": {
+    "title": "The Great Adventure",
+    "author": "John Doe",
+    "published_year": 2020,
+    "isbn": "9781234567890",
+    "genre": "Fiction",
+    "price": 19.99,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "Alice",
+        "rating": 5,
+        "comment": "A thrilling read!"
+      }
+    ],
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "chapter_title": "The Beginning"
+      }
+    ]
+  },
+  "instructions": "Merge the reviews and chapters arrays into a single array called combined_data.",
+  "ground_truth": {
+    "title": "The Great Adventure",
+    "author": "John Doe",
+    "published_year": 2020,
+    "isbn": "9781234567890",
+    "genre": "Fiction",
+    "price": 19.99,
+    "in_stock": true,
+    "combined_data": [
+      {
+        "reviewer_name": "Alice",
+        "rating": 5,
+        "comment": "A thrilling read!"
+      },
+      {
+        "chapter_number": 1,
+        "chapter_title": "The Beginning"
+      }
+    ]
+  },
+  "modification": "The 'reviews' and 'chapters' keys were removed and their values were combined into a new key called 'combined_data'."
+}

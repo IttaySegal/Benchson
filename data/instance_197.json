@@ -1,0 +1,44 @@
+{
+  "data": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "publication_year": 1925,
+    "price": 10.99,
+    "in_stock": true,
+    "genre": "Fiction",
+    "language": "English",
+    "pages": 180,
+    "publisher": "Scribner",
+    "reviews": [
+      {
+        "reviewer_name": "John Doe"
+      },
+      {
+        "reviewer_name": "Jane Smith"
+      }
+    ]
+  },
+  "instructions": "Append ' (Classic Edition)' to the title.",
+  "ground_truth": {
+    "title": "The Great Gatsby (Classic Edition)",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "publication_year": 1925,
+    "price": 10.99,
+    "in_stock": true,
+    "genre": "Fiction",
+    "language": "English",
+    "pages": 180,
+    "publisher": "Scribner",
+    "reviews": [
+      {
+        "reviewer_name": "John Doe"
+      },
+      {
+        "reviewer_name": "Jane Smith"
+      }
+    ]
+  },
+  "modification": "The title was changed to 'The Great Gatsby (Classic Edition)'."
+}

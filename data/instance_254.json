@@ -1,0 +1,40 @@
+{
+  "data": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "publication_date": "1925-04-10",
+    "genre": "Fiction",
+    "page_count": 180,
+    "rating": 4.5,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "review_date": "2023-10-01T14:48:00Z",
+        "review_text": "A classic novel that captures the essence of the American Dream.",
+        "rating": 5
+      }
+    ]
+  },
+  "instructions": "Change the value of in_stock to false.",
+  "ground_truth": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "publication_date": "1925-04-10",
+    "genre": "Fiction",
+    "page_count": 180,
+    "rating": 4.5,
+    "in_stock": false,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "review_date": "2023-10-01T14:48:00Z",
+        "review_text": "A classic novel that captures the essence of the American Dream.",
+        "rating": 5
+      }
+    ]
+  },
+  "modification": "The 'in_stock' field was changed from True to False."
+}

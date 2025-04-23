@@ -1,0 +1,40 @@
+{
+  "data": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "publication_date": "1925-04-10",
+    "genre": "Fiction",
+    "page_count": 180,
+    "rating": 4.2,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "John Doe",
+        "review_date": "2023-10-01T14:48:00Z",
+        "review_text": "A timeless classic that captures the essence of the American Dream.",
+        "rating": 5
+      }
+    ]
+  },
+  "instructions": "Change the reviewer name in the first review to Jane Doe.",
+  "ground_truth": {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "publication_date": "1925-04-10",
+    "genre": "Fiction",
+    "page_count": 180,
+    "rating": 4.2,
+    "in_stock": true,
+    "reviews": [
+      {
+        "reviewer_name": "Jane Doe",
+        "review_date": "2023-10-01T14:48:00Z",
+        "review_text": "A timeless classic that captures the essence of the American Dream.",
+        "rating": 5
+      }
+    ]
+  },
+  "modification": "The reviewer name was changed from 'John Doe' to 'Jane Doe'."
+}

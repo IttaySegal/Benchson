@@ -1,0 +1,70 @@
+{
+  "data": {
+    "categories": [
+      {
+        "category_name": "Fiction",
+        "books": [
+          {
+            "title": "The Great Gatsby",
+            "author": "F. Scott Fitzgerald",
+            "isbn": "9780743273565",
+            "published_year": 1925,
+            "price": 10.99,
+            "in_stock": true,
+            "genre": "Fiction",
+            "rating": 4.5,
+            "reviews": [
+              {
+                "reviewer_name": "John Doe",
+                "review_text": "A classic novel that captures the essence of the American Dream."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "instructions": "Add a new book to the Fiction category with the title 'To Kill a Mockingbird', author 'Harper Lee', isbn '9780061120084', published year 1960, price 8.99, in stock true, genre 'Fiction', rating 4.8, and a review by 'Jane Smith' saying 'A powerful and moving story about racial injustice.'",
+  "ground_truth": {
+    "categories": [
+      {
+        "category_name": "Fiction",
+        "books": [
+          {
+            "title": "The Great Gatsby",
+            "author": "F. Scott Fitzgerald",
+            "isbn": "9780743273565",
+            "published_year": 1925,
+            "price": 10.99,
+            "in_stock": true,
+            "genre": "Fiction",
+            "rating": 4.5,
+            "reviews": [
+              {
+                "reviewer_name": "John Doe",
+                "review_text": "A classic novel that captures the essence of the American Dream."
+              }
+            ]
+          },
+          {
+            "title": "To Kill a Mockingbird",
+            "author": "Harper Lee",
+            "isbn": "9780061120084",
+            "published_year": 1960,
+            "price": 8.99,
+            "in_stock": true,
+            "genre": "Fiction",
+            "rating": 4.8,
+            "reviews": [
+              {
+                "reviewer_name": "Jane Smith",
+                "review_text": "A powerful and moving story about racial injustice."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "modification": "A new book titled 'To Kill a Mockingbird' by Harper Lee was added to the 'Fiction' category."
+}
