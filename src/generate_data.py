@@ -1,6 +1,7 @@
 import json
 from validation import json_schema_validator, json_validator
 from LLMJsonGenerator import LLMJsonGenerator
+from json_comparator import compare_json_file
 import os
 
 # Global Counter for numbering files
@@ -21,6 +22,10 @@ def generate_valid_data(theme, structure, modifications_path, output_folder):
         return
 
     print("✅ JSON Schema generated.")
+    file_name = f"schema_{(counter + 17)//17}.json"
+    file_path = os.path.join(output_folder, file_name)
+    with open(file_path, 'w', encoding='utf-8') as out_file:
+        json.dump(json_schema, out_file, indent=2)
 
     # Ensure output folder exists
     os.makedirs(output_folder, exist_ok=True)
@@ -57,8 +62,13 @@ def generate_valid_data(theme, structure, modifications_path, output_folder):
             json.dump(eval_data, out_file, indent=2)
 
         print(f"✅ Successfully created: {file_path}")
+
+        # Compare data and ground_truth and output diff if needed
+        try:
+            is_equal = compare_json_file(file_path, output_dir=output_folder)
+            if not is_equal:
+                print(f"❌ Difference written to diff_output_{counter}.txt")
+        except Exception as e:
+            print(f"⚠️ Failed to compare JSONs for {file_path}: {str(e)}")
+
         counter += 1  # Increment the global counter after each file is created
-
-
-
-

@@ -1,34 +1,62 @@
 from langchain_core.prompts import PromptTemplate
 
 
+# def strict_json_schema_human_prompt() -> PromptTemplate:
+#     return PromptTemplate(
+#         template="""
+#         Generate a strictly valid JSON Schema based on the specified theme and structure.
+#
+#         Theme: {theme}
+#         Structure: {structure}
+#
+#         Requirements:
+#         - The schema must be directly relevant to the given theme. Ensure the schema's properties, naming conventions, and structure are logically connected to the theme.
+#         - Adhere to the JSON Schema Draft-07 standard.
+#         - Include between 20 and 40 fields, with a diverse range of types:
+#           - `string`, `integer`, `number`, `boolean`, `array`, `object`.
+#         - Each field must be explicitly defined using the `type` keyword.
+#         - Ensure at least one field of each type (`string`, `integer`, `number`, `boolean`, `array`, `object`) is present.
+#         - Do not alter the type of any value specified in the original structure.
+#         - Use constraints like `minLength`, `maximum`, `enum`, `minItems`, `maxItems`, or `required` only when applicable and relevant to the theme.
+#         - Include arrays with a valid `items` definition and objects with nested properties when applicable.
+#         - Restrict objects to only defined properties by setting `"additionalProperties": false` for all object definitions.
+#         - Specify the `$schema` field as `"http://json-schema.org/draft-07/schema#"`.
+#
+#         Important: Ensure that the schema represents a **valid JSON format directly related to the theme**.
+#         For example, if the theme is "Learning Algorithms", the schema should include fields relevant to algorithms, such as `algorithm_name`, `complexity`, `implementation_language`, `author`, `description`, etc.
+#
+#         Output:
+#         - Only return the JSON Schema as a valid JSON string.
+#         - Do not include any explanations, descriptions, or additional text.
+#         """,
+#         input_variables=["theme", "structure"]
+#     )
+
 def strict_json_schema_human_prompt() -> PromptTemplate:
     return PromptTemplate(
         template="""
-        Generate a strictly valid JSON Schema based on the specified theme and structure.
+You are an assistant specialized in generating JSON Schemas that conform to the JSON Schema Draft-07 specification. Your task is to create a strictly valid JSON Schema based on the following two input parameters:
 
-        Theme: {theme}
-        Structure: {structure}
+- Theme: {theme}
+- Structure: {structure}
 
-        Requirements:
-        - The schema must be directly relevant to the given theme. Ensure the schema's properties, naming conventions, and structure are logically connected to the theme.
-        - Adhere to the JSON Schema Draft-07 standard.
-        - Include between 20 and 40 fields, with a diverse range of types:
-          - `string`, `integer`, `number`, `boolean`, `array`, `object`.
-        - Each field must be explicitly defined using the `type` keyword.
-        - Ensure at least one field of each type (`string`, `integer`, `number`, `boolean`, `array`, `object`) is present.
-        - Do not alter the type of any value specified in the original structure.
-        - Use constraints like `minLength`, `maximum`, `enum`, `minItems`, `maxItems`, or `required` only when applicable and relevant to the theme.
-        - Include arrays with a valid `items` definition and objects with nested properties when applicable.
-        - Restrict objects to only defined properties by setting `"additionalProperties": false` for all object definitions.
-        - Specify the `$schema` field as `"http://json-schema.org/draft-07/schema#"`.
+The **theme** represents the subject matter the schema should model. The **structure** defines the layout or format of the data.
 
-        Important: Ensure that the schema represents a **valid JSON format directly related to the theme**. 
-        For example, if the theme is "Learning Algorithms", the schema should include fields relevant to algorithms, such as `algorithm_name`, `complexity`, `implementation_language`, `author`, `description`, etc.
+Based on these inputs, you must generate a JSON Schema that:
 
-        Output:
-        - Only return the JSON Schema as a valid JSON string.
-        - Do not include any explanations, descriptions, or additional text.
-        """,
+- Clearly represents the theme through semantically appropriate and logically named properties.
+- Strictly conforms to the JSON Schema Draft-07 standard.
+- Includes **between 20 and 40 fields** of various types: `string`, `integer`, `number`, `boolean`, `array`, and `object`.
+- Contains **at least one field** of each of the six types mentioned above.
+- Uses the `type` keyword for all fields, and includes additional constraints (`minLength`, `maximum`, `enum`, `minItems`, `maxItems`, `required`) only when relevant to the theme.
+- Defines the `items` schema for all arrays and includes nested `properties` for all objects where applicable.
+- Sets `"additionalProperties": false` on all object definitions to restrict extra fields.
+- Specifies the `$schema` field as `"http://json-schema.org/draft-07/schema#"`.
+
+Your response must include:
+- Only the JSON Schema as a valid JSON string.
+- No markdown formatting, no explanations, and no extra text — just the schema.
+""",
         input_variables=["theme", "structure"]
     )
 

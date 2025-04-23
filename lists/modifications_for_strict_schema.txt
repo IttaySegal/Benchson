@@ -15,5 +15,3 @@ Sort array elements: Arrange elements within an array in a specific order, such 
 Reverse array elements: Rearrange elements in an array so that their order is flipped from end to start.
 Merge two arrays: Combine two arrays into a single array without violating the schema’s limits for array length or content type.
 Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.
-
-

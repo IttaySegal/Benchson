@@ -8,7 +8,6 @@ Interdependent Fields: Field values that change based on selections in other fie
 Table Format: Information arranged in rows and columns, making it easy to compare data across multiple items.
 Map Structure (Key-Value): Each entry pairs a key with a value, ideal for lookup-style data storage.
 Nested Structures: A main object that includes embedded objects, supporting layered and organized data.
-Relational Links: Items that reference other items by ID or URI, allowing connected and interrelated data sets.
 Matrix Format: Arrays within arrays, used for representing complex grids or multi-level structured data.
 Flexible Field Types: Fields that can store different kinds of data—such as numbers, strings, or structured objects.
 Grouped Attributes: Related fields are bundled under a single property, making data cleaner and more organized.
@@ -17,4 +16,3 @@ Category-Based Grouping: Items are sorted into categories, each acting as a cont
 Chronological Entries: Data entries include a timestamp, supporting time-based tracking and trends.
 Flat Data Model: A simple layout with no nested objects; all attributes exist at the same top level.
 Node-Based Hierarchy: A data layout where each item can have child nodes, forming a recursive tree model.
-Dynamic Schema: A structure where fields and their rules are defined at runtime, offering maximum adaptability.
