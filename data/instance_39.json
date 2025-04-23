@@ -1,0 +1,51 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Abbey Road",
+      "description": "The eleventh studio album by the Beatles.",
+      "artist": "The Beatles",
+      "release_year": 1969,
+      "genre": "Rock",
+      "duration": 47.3,
+      "tracks": [
+        {
+          "track_number": 1,
+          "title": "Come Together",
+          "duration": 4.19
+        },
+        {
+          "track_number": 2,
+          "title": "Something",
+          "duration": 3.03
+        }
+      ]
+    }
+  ],
+  "instructions": "Instruction: Change the value of the key \"is_classic\" to true for the album with the id 1.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Abbey Road",
+      "description": "The eleventh studio album by the Beatles.",
+      "artist": "The Beatles",
+      "release_year": 1969,
+      "genre": "Rock",
+      "duration": 47.3,
+      "tracks": [
+        {
+          "track_number": 1,
+          "title": "Come Together",
+          "duration": 4.19
+        },
+        {
+          "track_number": 2,
+          "title": "Something",
+          "duration": 3.03
+        }
+      ],
+      "is_classic": true
+    }
+  ],
+  "modification": "The attribute 'is_classic' with a value of True was added to the JSON object."
+}

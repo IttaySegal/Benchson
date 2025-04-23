@@ -1,0 +1,61 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "description": "A classic Italian dish with a rich meat sauce.",
+      "preparation_time": 15,
+      "cooking_time": 45,
+      "servings": 4,
+      "difficulty": "Medium",
+      "vegetarian": false,
+      "vegan": false,
+      "gluten_free": false,
+      "ingredients": [
+        {
+          "name": "Spaghetti",
+          "quantity": 400,
+          "unit": "grams"
+        },
+        {
+          "name": "Ground beef",
+          "quantity": 500,
+          "unit": "grams"
+        },
+        {
+          "name": "Tomato sauce",
+          "quantity": 1,
+          "unit": "can"
+        }
+      ]
+    }
+  ],
+  "instructions": "Instruction: Please remove the ingredient 'Ground beef' from the 'ingredients' array in the JSON object.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "description": "A classic Italian dish with a rich meat sauce.",
+      "preparation_time": 15,
+      "cooking_time": 45,
+      "servings": 4,
+      "difficulty": "Medium",
+      "vegetarian": false,
+      "vegan": false,
+      "gluten_free": false,
+      "ingredients": [
+        {
+          "name": "Spaghetti",
+          "quantity": 400,
+          "unit": "grams"
+        },
+        {
+          "name": "Tomato sauce",
+          "quantity": 1,
+          "unit": "can"
+        }
+      ]
+    }
+  ],
+  "modification": "The ingredient 'Ground beef' was removed from the list of ingredients."
+}

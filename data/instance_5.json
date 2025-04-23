@@ -24,7 +24,7 @@
       ]
     }
   ],
-  "instructions": "Please remove the 'ratings' key and its corresponding value from the object.",
+  "instructions": "Change the value of \"in_stock\" to false.",
   "ground_truth": [
     {
       "id": 1,
@@ -34,7 +34,12 @@
       "published_year": 1925,
       "genre": "Fiction",
       "price": 10.99,
-      "in_stock": true,
+      "in_stock": false,
+      "ratings": [
+        4.5,
+        5,
+        4
+      ],
       "reviews": [
         {
           "reviewer_name": "John Doe"
@@ -45,5 +50,5 @@
       ]
     }
   ],
-  "modification": "The 'ratings' field was removed."
+  "modification": "The 'in_stock' field was changed from True to False."
 }

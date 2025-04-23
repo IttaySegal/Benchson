@@ -1,0 +1,66 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "description": "A classic Italian dish with a rich meat sauce.",
+      "preparation_time": 15,
+      "cooking_time": 45,
+      "servings": 4,
+      "difficulty": "Easy",
+      "vegetarian": false,
+      "vegan": false,
+      "gluten_free": false,
+      "ingredients": [
+        {
+          "name": "Spaghetti",
+          "quantity": 400,
+          "unit": "grams"
+        },
+        {
+          "name": "Ground beef",
+          "quantity": 500,
+          "unit": "grams"
+        },
+        {
+          "name": "Tomato sauce",
+          "quantity": 1,
+          "unit": "can"
+        }
+      ]
+    }
+  ],
+  "instructions": "Please sort the ingredients array in the JSON object alphabetically by the 'name' field.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "description": "A classic Italian dish with a rich meat sauce.",
+      "preparation_time": 15,
+      "cooking_time": 45,
+      "servings": 4,
+      "difficulty": "Easy",
+      "vegetarian": false,
+      "vegan": false,
+      "gluten_free": false,
+      "ingredients": [
+        {
+          "name": "Ground beef",
+          "quantity": 500,
+          "unit": "grams"
+        },
+        {
+          "name": "Spaghetti",
+          "quantity": 400,
+          "unit": "grams"
+        },
+        {
+          "name": "Tomato sauce",
+          "quantity": 1,
+          "unit": "can"
+        }
+      ]
+    }
+  ],
+  "modification": "The order of the ingredients was changed."
+}

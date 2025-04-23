@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Abbey Road",
+      "description": "The eleventh studio album by the Beatles.",
+      "artist": "The Beatles",
+      "release_year": 1969,
+      "genre": "Rock",
+      "duration": 47.3,
+      "tracks": [
+        {
+          "track_number": 1,
+          "title": "Come Together",
+          "duration": 4.19
+        },
+        {
+          "track_number": 2,
+          "title": "Something",
+          "duration": 3.03
+        }
+      ]
+    }
+  ],
+  "instructions": "Instruction: Please remove the track with the title 'Something' from the 'tracks' array.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Abbey Road",
+      "description": "The eleventh studio album by the Beatles.",
+      "artist": "The Beatles",
+      "release_year": 1969,
+      "genre": "Rock",
+      "duration": 47.3,
+      "tracks": [
+        {
+          "track_number": 1,
+          "title": "Come Together",
+          "duration": 4.19
+        }
+      ]
+    }
+  ],
+  "modification": "The track titled 'Something' was removed from the 'tracks' list."
+}

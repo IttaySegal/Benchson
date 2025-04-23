@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Smartphone",
+      "description": "A high-end smartphone with advanced features.",
+      "price": 999.99,
+      "currency": "USD",
+      "in_stock": true,
+      "category": "Electronics",
+      "tags": [
+        "Technology",
+        "Gadget"
+      ],
+      "dimensions": {
+        "length": 15.8,
+        "width": 7.8,
+        "height": 0.8
+      },
+      "weight": 0.2
+    }
+  ],
+  "instructions": "Instruction: Please remove the 'weight' key and its corresponding value from the object.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Smartphone",
+      "description": "A high-end smartphone with advanced features.",
+      "price": 999.99,
+      "currency": "USD",
+      "in_stock": true,
+      "category": "Electronics",
+      "tags": [
+        "Technology",
+        "Gadget"
+      ],
+      "dimensions": {
+        "length": 15.8,
+        "width": 7.8,
+        "height": 0.8
+      }
+    }
+  ],
+  "modification": "The 'weight' field was removed from the JSON object."
+}

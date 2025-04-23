@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Los Angeles Lakers",
+      "description": "A professional basketball team based in Los Angeles, California.",
+      "sport": "Basketball",
+      "founded_year": 1947,
+      "home_stadium": "Crypto.com Arena",
+      "head_coach": "Darvin Ham",
+      "team_colors": [
+        "Purple",
+        "Gold"
+      ],
+      "championships_won": 17,
+      "average_attendance": 18997,
+      "is_active": true,
+      "sponsors": [
+        "Nike",
+        "Gatorade"
+      ],
+      "team_captain": {}
+    }
+  ],
+  "instructions": "Instruction: Change the value of \"average_attendance\" to 19500.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Los Angeles Lakers",
+      "description": "A professional basketball team based in Los Angeles, California.",
+      "sport": "Basketball",
+      "founded_year": 1947,
+      "home_stadium": "Crypto.com Arena",
+      "head_coach": "Darvin Ham",
+      "team_colors": [
+        "Purple",
+        "Gold"
+      ],
+      "championships_won": 17,
+      "average_attendance": 19500,
+      "is_active": true,
+      "sponsors": [
+        "Nike",
+        "Gatorade"
+      ],
+      "team_captain": {}
+    }
+  ],
+  "modification": "The average attendance was updated from 18997 to 19500."
+}

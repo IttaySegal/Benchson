@@ -1,0 +1,48 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Epic Adventure",
+      "description": "An epic adventure game with stunning graphics and immersive gameplay.",
+      "release_date": "2023-10-01",
+      "genre": "Adventure",
+      "developer": "Adventure Studios",
+      "publisher": "Adventure Games Inc.",
+      "platforms": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "rating": 9.5,
+      "multiplayer": true,
+      "price": 59.99,
+      "system_requirements": {
+        "os": "Windows 10"
+      }
+    }
+  ],
+  "instructions": "Increase the price of the game by 5 dollars.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Epic Adventure",
+      "description": "An epic adventure game with stunning graphics and immersive gameplay.",
+      "release_date": "2023-10-01",
+      "genre": "Adventure",
+      "developer": "Adventure Studios",
+      "publisher": "Adventure Games Inc.",
+      "platforms": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "rating": 9.5,
+      "multiplayer": true,
+      "price": 64.99,
+      "system_requirements": {
+        "os": "Windows 10"
+      }
+    }
+  ],
+  "modification": "The price was increased from 59.99 to 64.99."
+}

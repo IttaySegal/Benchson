@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Smartphone",
+      "description": "A high-end smartphone with advanced features.",
+      "price": 999.99,
+      "currency": "USD",
+      "in_stock": true,
+      "category": "Electronics",
+      "tags": [
+        "Technology",
+        "Gadget"
+      ],
+      "dimensions": {
+        "length": 15.8,
+        "width": 7.8,
+        "height": 0.8
+      },
+      "weight": 0.2
+    }
+  ],
+  "instructions": "Instruction: Append the text \" - Limited Edition\" to the 'name' field of the first item in the JSON array.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Smartphone - Limited Edition",
+      "description": "A high-end smartphone with advanced features.",
+      "price": 999.99,
+      "currency": "USD",
+      "in_stock": true,
+      "category": "Electronics",
+      "tags": [
+        "Technology",
+        "Gadget"
+      ],
+      "dimensions": {
+        "length": 15.8,
+        "width": 7.8,
+        "height": 0.8
+      },
+      "weight": 0.2
+    }
+  ],
+  "modification": "The name of the product was changed to 'Smartphone - Limited Edition'."
+}

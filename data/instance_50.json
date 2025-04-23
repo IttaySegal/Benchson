@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Abbey Road",
+      "description": "The eleventh studio album by the Beatles.",
+      "artist": "The Beatles",
+      "release_year": 1969,
+      "genre": "Rock",
+      "duration": 47.3,
+      "tracks": [
+        {
+          "track_number": 1,
+          "title": "Come Together",
+          "duration": 4.19
+        },
+        {
+          "track_number": 2,
+          "title": "Something",
+          "duration": 3.03
+        }
+      ]
+    }
+  ],
+  "instructions": "Merge the 'tracks' array from the JSON object with the following array: [{'track_number': 3, 'title': 'Maxwell's Silver Hammer', 'duration': 3.27}, {'track_number': 4, 'title': 'Oh! Darling', 'duration': 3.26}].",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Abbey Road",
+      "description": "The eleventh studio album by the Beatles.",
+      "artist": "The Beatles",
+      "release_year": 1969,
+      "genre": "Rock",
+      "duration": 47.3,
+      "tracks": [
+        {
+          "track_number": 1,
+          "title": "Come Together",
+          "duration": 4.19
+        },
+        {
+          "track_number": 2,
+          "title": "Something",
+          "duration": 3.03
+        },
+        {
+          "track_number": 3,
+          "title": "Maxwell's Silver Hammer",
+          "duration": 3.27
+        },
+        {
+          "track_number": 4,
+          "title": "Oh! Darling",
+          "duration": 3.26
+        }
+      ]
+    }
+  ],
+  "modification": ""
+}

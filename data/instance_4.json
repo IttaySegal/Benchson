@@ -24,7 +24,7 @@
       ]
     }
   ],
-  "instructions": "Please remove the 'ratings' key and its corresponding value from the object.",
+  "instructions": "Change the price of the book to 12.99.",
   "ground_truth": [
     {
       "id": 1,
@@ -33,8 +33,13 @@
       "author": "F. Scott Fitzgerald",
       "published_year": 1925,
       "genre": "Fiction",
-      "price": 10.99,
+      "price": 12.99,
       "in_stock": true,
+      "ratings": [
+        4.5,
+        5,
+        4
+      ],
       "reviews": [
         {
           "reviewer_name": "John Doe"
@@ -45,5 +50,5 @@
       ]
     }
   ],
-  "modification": "The 'ratings' field was removed."
+  "modification": "The price was changed from 10.99 to 12.99."
 }

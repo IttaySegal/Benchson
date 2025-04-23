@@ -24,17 +24,22 @@
       ]
     }
   ],
-  "instructions": "Please remove the 'ratings' key and its corresponding value from the object.",
+  "instructions": "Instruction: Please append the text \" - Classic Edition\" to the 'name' field of the JSON object.",
   "ground_truth": [
     {
       "id": 1,
-      "name": "The Great Gatsby",
+      "name": "The Great Gatsby - Classic Edition",
       "description": "A novel set in the Roaring Twenties about the mysterious millionaire Jay Gatsby.",
       "author": "F. Scott Fitzgerald",
       "published_year": 1925,
       "genre": "Fiction",
       "price": 10.99,
       "in_stock": true,
+      "ratings": [
+        4.5,
+        5,
+        4
+      ],
       "reviews": [
         {
           "reviewer_name": "John Doe"
@@ -45,5 +50,5 @@
       ]
     }
   ],
-  "modification": "The 'ratings' field was removed."
+  "modification": "The name of the book was modified to include 'Classic Edition'."
 }

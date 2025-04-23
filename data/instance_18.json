@@ -1,0 +1,43 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Inception",
+      "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+      "release_year": 2010,
+      "duration_minutes": 148,
+      "rating": 8.8,
+      "genre": "Sci-Fi",
+      "director": "Christopher Nolan",
+      "cast": [
+        "Leonardo DiCaprio",
+        "Joseph Gordon-Levitt",
+        "Elliot Page"
+      ],
+      "budget_usd": 160000000,
+      "revenue_usd": 829895144,
+      "is_award_winning": true
+    }
+  ],
+  "instructions": "Please remove the 'budget_usd' key and its corresponding value from the JSON object.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Inception",
+      "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+      "release_year": 2010,
+      "duration_minutes": 148,
+      "rating": 8.8,
+      "genre": "Sci-Fi",
+      "director": "Christopher Nolan",
+      "cast": [
+        "Leonardo DiCaprio",
+        "Joseph Gordon-Levitt",
+        "Elliot Page"
+      ],
+      "revenue_usd": 829895144,
+      "is_award_winning": true
+    }
+  ],
+  "modification": "The 'budget_usd' field was removed."
+}

@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Los Angeles Lakers",
+      "description": "A professional basketball team based in Los Angeles, California.",
+      "sport": "Basketball",
+      "founded_year": 1947,
+      "home_stadium": "Crypto.com Arena",
+      "head_coach": "Darvin Ham",
+      "team_colors": [
+        "Purple",
+        "Gold"
+      ],
+      "championships_won": 17,
+      "average_attendance": 18997,
+      "is_active": true,
+      "sponsors": [
+        "Nike",
+        "Gatorade"
+      ],
+      "team_captain": {}
+    }
+  ],
+  "instructions": "Instruction: Please update the 'team_captain' key in the first object of the JSON array to include the following information: {'name': 'LeBron James', 'position': 'Small Forward', 'jersey_number': 6}.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Los Angeles Lakers",
+      "description": "A professional basketball team based in Los Angeles, California.",
+      "sport": "Basketball",
+      "founded_year": 1947,
+      "home_stadium": "Crypto.com Arena",
+      "head_coach": "Darvin Ham",
+      "team_colors": [
+        "Purple",
+        "Gold"
+      ],
+      "championships_won": 17,
+      "average_attendance": 18997,
+      "is_active": true,
+      "sponsors": [
+        "Nike",
+        "Gatorade"
+      ],
+      "team_captain": {
+        "name": "LeBron James",
+        "position": "Small Forward",
+        "jersey_number": 6
+      }
+    }
+  ],
+  "modification": "The 'team_captain' field was updated to include the name, position, and jersey number of the team captain."
+}

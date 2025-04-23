@@ -24,7 +24,7 @@
       ]
     }
   ],
-  "instructions": "Please remove the 'ratings' key and its corresponding value from the object.",
+  "instructions": "Please sort the 'ratings' array in ascending order.",
   "ground_truth": [
     {
       "id": 1,
@@ -35,6 +35,11 @@
       "genre": "Fiction",
       "price": 10.99,
       "in_stock": true,
+      "ratings": [
+        4,
+        4.5,
+        5
+      ],
       "reviews": [
         {
           "reviewer_name": "John Doe"
@@ -45,5 +50,5 @@
       ]
     }
   ],
-  "modification": "The 'ratings' field was removed."
+  "modification": "The ratings were modified."
 }

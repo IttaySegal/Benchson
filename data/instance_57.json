@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Game One",
+      "description": "This is a description of Game One.",
+      "release_date": "2023-01-01",
+      "genre": "Action",
+      "developer": "Developer One",
+      "publisher": "Publisher One",
+      "platforms": [
+        "PC",
+        "PlayStation"
+      ],
+      "rating": 8.5,
+      "multiplayer": true,
+      "price": 59.99,
+      "system_requirements": {
+        "os": "Windows 10"
+      }
+    }
+  ],
+  "instructions": "Instruction: Change the 'os' value in the 'system_requirements' dictionary to 'Windows 11'.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Game One",
+      "description": "This is a description of Game One.",
+      "release_date": "2023-01-01",
+      "genre": "Action",
+      "developer": "Developer One",
+      "publisher": "Publisher One",
+      "platforms": [
+        "PC",
+        "PlayStation"
+      ],
+      "rating": 8.5,
+      "multiplayer": true,
+      "price": 59.99,
+      "system_requirements": {
+        "os": "Windows 11"
+      }
+    }
+  ],
+  "modification": "The 'os' field in the 'system_requirements' object was changed from 'Windows 10' to 'Windows 11'."
+}

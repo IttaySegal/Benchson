@@ -11,9 +11,9 @@ Remove a value from an existing array: Delete a specified element from an existi
 Update numeric value by increment or decrement: Change an integer or float value by adding or subtracting a specific amount, staying within allowed limits.
 Concatenate string values: Append or prepend additional text to an existing string without altering its type or purpose.
 Capitalize or format string values: Modify the format of a string, such as changing case (uppercase/lowercase) or applying title case.
-# Sort array elements: Arrange elements within an array in a specific order, such as alphabetical, numerical, or custom-defined.
-## Reverse array elements: Rearrange elements in an array so that their order is flipped from end to start.
+Sort array elements: Arrange elements within an array in a specific order, such as alphabetical, numerical, or custom-defined.
+Reverse array elements: Rearrange elements in an array so that their order is flipped from end to start.
 Merge two arrays: Combine two arrays into a single array without violating the schema’s limits for array length or content type.
-# Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.
+Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.
 
 

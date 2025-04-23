@@ -1,0 +1,65 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Smartphone",
+      "description": "A high-end smartphone with advanced features.",
+      "price": 999.99,
+      "currency": "USD",
+      "in_stock": true,
+      "category": "Electronics",
+      "tags": [
+        "Technology",
+        "Gadget"
+      ],
+      "dimensions": {
+        "length": 15.8,
+        "width": 7.8,
+        "height": 0.8
+      },
+      "weight": 0.2
+    }
+  ],
+  "instructions": "Instruction: Merge the following two arrays into a single array:\n\nArray 1: [{'id': 1, 'name': 'Smartphone', 'description': 'A high-end smartphone with advanced features.', 'price': 999.99, 'currency': 'USD', 'in_stock': True, 'category': 'Electronics', 'tags': ['Technology', 'Gadget'], 'dimensions': {'length': 15.8, 'width': 7.8, 'height': 0.8}, 'weight': 0.2}]\n\nArray 2: [{'id': 2, 'name': 'Laptop', 'description': 'A powerful laptop for work and gaming.', 'price': 1499.99, 'currency': 'USD', 'in_stock': False, 'category': 'Electronics', 'tags': ['Technology', 'Computer'], 'dimensions': {'length': 36.0, 'width': 24.0, 'height': 2.0}, 'weight': 2.5}]",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Smartphone",
+      "description": "A high-end smartphone with advanced features.",
+      "price": 999.99,
+      "currency": "USD",
+      "in_stock": true,
+      "category": "Electronics",
+      "tags": [
+        "Technology",
+        "Gadget"
+      ],
+      "dimensions": {
+        "length": 15.8,
+        "width": 7.8,
+        "height": 0.8
+      },
+      "weight": 0.2
+    },
+    {
+      "id": 2,
+      "name": "Laptop",
+      "description": "A powerful laptop for work and gaming.",
+      "price": 1499.99,
+      "currency": "USD",
+      "in_stock": false,
+      "category": "Electronics",
+      "tags": [
+        "Technology",
+        "Computer"
+      ],
+      "dimensions": {
+        "length": 36.0,
+        "width": 24.0,
+        "height": 2.0
+      },
+      "weight": 2.5
+    }
+  ],
+  "modification": "A new product with id 2 was added to the list."
+}

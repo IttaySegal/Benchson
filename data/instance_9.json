@@ -24,7 +24,7 @@
       ]
     }
   ],
-  "instructions": "Please remove the 'ratings' key and its corresponding value from the object.",
+  "instructions": "Please add a new rating of 4.7 to the 'ratings' array.",
   "ground_truth": [
     {
       "id": 1,
@@ -35,6 +35,12 @@
       "genre": "Fiction",
       "price": 10.99,
       "in_stock": true,
+      "ratings": [
+        4.5,
+        5,
+        4,
+        4.7
+      ],
       "reviews": [
         {
           "reviewer_name": "John Doe"
@@ -45,5 +51,5 @@
       ]
     }
   ],
-  "modification": "The 'ratings' field was removed."
+  "modification": "A new rating of 4.7 was added to the 'ratings' list."
 }

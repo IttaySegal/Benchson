@@ -1,0 +1,66 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "description": "A classic Italian dish with a rich meat sauce.",
+      "preparation_time": 15,
+      "cooking_time": 45,
+      "servings": 4,
+      "difficulty": "Medium",
+      "vegetarian": false,
+      "vegan": false,
+      "gluten_free": false,
+      "ingredients": [
+        {
+          "name": "Spaghetti",
+          "quantity": 400,
+          "unit": "grams"
+        },
+        {
+          "name": "Ground beef",
+          "quantity": 500,
+          "unit": "grams"
+        },
+        {
+          "name": "Tomato sauce",
+          "quantity": 1,
+          "unit": "can"
+        }
+      ]
+    }
+  ],
+  "instructions": "Please change the 'name' field of the recipe to title case.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "description": "A classic Italian dish with a rich meat sauce.",
+      "preparation_time": 15,
+      "cooking_time": 45,
+      "servings": 4,
+      "difficulty": "Medium",
+      "vegetarian": false,
+      "vegan": false,
+      "gluten_free": false,
+      "ingredients": [
+        {
+          "name": "Spaghetti",
+          "quantity": 400,
+          "unit": "grams"
+        },
+        {
+          "name": "Ground beef",
+          "quantity": 500,
+          "unit": "grams"
+        },
+        {
+          "name": "Tomato sauce",
+          "quantity": 1,
+          "unit": "can"
+        }
+      ]
+    }
+  ],
+  "modification": "No changes were made to the JSON object."
+}

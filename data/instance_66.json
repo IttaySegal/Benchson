@@ -1,0 +1,65 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "description": "A classic Italian dish with a rich meat sauce.",
+      "preparation_time": 15,
+      "cooking_time": 45,
+      "servings": 4,
+      "difficulty": "Easy",
+      "vegetarian": false,
+      "vegan": false,
+      "gluten_free": false,
+      "ingredients": [
+        {
+          "name": "Spaghetti",
+          "quantity": 400,
+          "unit": "grams"
+        },
+        {
+          "name": "Ground Beef",
+          "quantity": 500,
+          "unit": "grams"
+        },
+        {
+          "name": "Tomato Sauce",
+          "quantity": 1,
+          "unit": "can"
+        }
+      ]
+    }
+  ],
+  "instructions": "Please remove the 'vegetarian' key and its corresponding value from the JSON object.",
+  "ground_truth": [
+    {
+      "id": 1,
+      "name": "Spaghetti Bolognese",
+      "description": "A classic Italian dish with a rich meat sauce.",
+      "preparation_time": 15,
+      "cooking_time": 45,
+      "servings": 4,
+      "difficulty": "Easy",
+      "vegan": false,
+      "gluten_free": false,
+      "ingredients": [
+        {
+          "name": "Spaghetti",
+          "quantity": 400,
+          "unit": "grams"
+        },
+        {
+          "name": "Ground Beef",
+          "quantity": 500,
+          "unit": "grams"
+        },
+        {
+          "name": "Tomato Sauce",
+          "quantity": 1,
+          "unit": "can"
+        }
+      ]
+    }
+  ],
+  "modification": "The 'vegetarian' key was removed."
+}
