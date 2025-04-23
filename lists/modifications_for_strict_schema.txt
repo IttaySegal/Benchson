@@ -12,7 +12,7 @@ Concatenate string values: Append or prepend additional text to an existing stri
 Capitalize or format string values: Modify the format of a string, such as changing case uppercase/lowercase.
 Sort array elements: Arrange elements within an array in a specific order, such as alphabetical, numerical, or custom-defined.
 Reverse array elements: Rearrange elements in an array so that their order is flipped from end to start.
-Merge two arrays: Combine two arrays into a single array without violating the schema’s limits for array length or content type.
+Merge two arrays: Combine an existing array with a new array without violating the schema’s limits for array length or content type.
 Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.
 
 

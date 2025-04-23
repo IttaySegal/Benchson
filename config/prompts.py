@@ -3,107 +3,98 @@ from langchain_core.prompts import PromptTemplate
 
 def strict_json_schema_human_prompt() -> PromptTemplate:
     return PromptTemplate(
-        template="""
-        Generate a strictly valid JSON Schema based on the specified theme and structure.
-
-        Theme: {theme}
-        Structure: {structure}
-
-        Requirements:
-        - The schema must be directly relevant to the given theme. Ensure the schema's properties, naming conventions, and structure are logically connected to the theme.
-        - Adhere to the JSON Schema Draft-07 standard.
-        - Include between 20 and 40 fields, with a diverse range of types:
-          - `string`, `integer`, `number`, `boolean`, `array`, `object`.
-        - Each field must be explicitly defined using the `type` keyword.
-        - Ensure at least one field of each type (`string`, `integer`, `number`, `boolean`, `array`, `object`) is present.
-        - Do not alter the type of any value specified in the original structure.
-        - Use constraints like `minLength`, `maximum`, `enum`, `minItems`, `maxItems`, or `required` only when applicable and relevant to the theme.
-        - Include arrays with a valid `items` definition and objects with nested properties when applicable.
-        - Restrict objects to only defined properties by setting `"additionalProperties": false` for all object definitions.
-        - Specify the `$schema` field as `"http://json-schema.org/draft-07/schema#"`.
-
-        Important: Ensure that the schema represents a **valid JSON format directly related to the theme**. 
-        For example, if the theme is "Learning Algorithms", the schema should include fields relevant to algorithms, such as `algorithm_name`, `complexity`, `implementation_language`, `author`, `description`, etc.
-
-        Output:
-        - Only return the JSON Schema as a valid JSON string.
-        - Do not include any explanations, descriptions, or additional text.
-        """,
-        input_variables=["theme", "structure"]
+        input_variables=["theme", "structure"],
+        template=
+        "You are an assistant specialized in generating JSON Schemas that conform to the JSON Schema Draft-07 specification.\n"
+        "Your task is to create a strictly valid JSON Schema based on the following two input parameters:\n"
+        "1. `{theme}` — This describes the high-level subject or domain the schema should represent.\n"
+        "2. `{structure}` — This describes the general layout or conceptual organization of the schema.\n\n"
+        "Based on these inputs, you must generate a JSON Schema that:\n"
+        "- Clearly represents the theme through semantically appropriate and logically named properties.\n"
+        "- Strictly conforms to the JSON Schema Draft-07 standard.\n"
+        "- The schema must include between 20 and 40 properties in total.\n"
+        "- The schema must include at least one property of each of the following types: `string`, `integer`, `float`, `number`, `boolean`, `array`, and `object`.\n"
+        "- Uses the type keyword for all fields, and includes additional constraints (minLength, maximum, enum, minItems, maxItems, required) only when relevant to the theme.\n"
+        "- Defines the items schema for all arrays and includes nested properties for all objects where applicable.\n"
+        "- Sets `additionalProperties: false` on all object definitions to restrict extra fields.\n"
+        "- Specifies the $schema field as http://json-schema.org/draft-07/schema#.\n\n"
+        "Your response must include:\n"
+        "- Only the JSON Schema as a valid JSON string.\n"
+        "- No markdown formatting, no explanations, and no extra text — just the schema.\n"
+        "Output:"
     )
 
 
 def dynamic_json_schema_human_prompt() -> PromptTemplate:
     return PromptTemplate(
-        template="""
-        Generate a dynamic JSON Schema based on the provided theme and structure.
-
-        Theme: {theme}
-        Structure: {structure}
-
-        Requirements:
-        - The schema must comply with the JSON Schema Draft-07 standard.
-        - Include at least 20 fields with a diverse range of types: `string`, `integer`, `number`, `boolean`, `array`, `object`.
-        - Include at least **one conditional block** using the `if`, `then`, `else` keywords.
-        - Allow for **additional keys** beyond the specified structure by setting `"additionalProperties": true` where applicable.
-        - Include arrays with a valid `items` definition and objects with nested properties where relevant.
-        - Ensure proper use of the `required` keyword to specify necessary fields.
-        - Include conditional logic such as:
-          - If a specific key is present and has a particular value, then additional keys must be required.
-          - If a particular condition is met, the type of certain fields should change.
-        - Specify the `$schema` field as `"http://json-schema.org/draft-07/schema#"`.
-
-        Output:
-        - Return only the JSON Schema as a valid JSON string.
-        - Do not include any explanations, descriptions, or additional text.
-
-        Example (simplified for demonstration purposes):
-        If the theme is "Products", and the structure is "Product Catalog with categories and reviews":
-        - If a product's `category` is `"electronics"`, then the `warranty_period` field is required.
-        - If a product's `category` is `"food"`, then the `expiration_date` field is required.
-        - Allow additional keys to be added for future product attributes.
-        """,
-        input_variables=["theme", "structure"]
+        input_variables=["theme", "structure"],
+        template=(
+            "You are an assistant specialized in generating JSON Schemas that conform to the JSON Schema Draft-07 specification. Your task is to create a strictly valid JSON Schema based on the following two input parameters:\n\n"
+            "You will receive two inputs:\n"
+            "1. `{theme}` — This describes the high-level subject or domain the schema should represent.\n"
+            "2. `{structure}` — This describes the general layout or conceptual organization of the schema.\n\n"
+            "Your task is to create a single JSON Schema that matches the provided theme and structure while adhering to the following strict requirements:\n"
+            "- The schema must be valid according to the JSON Schema Draft-07 specification.\n"
+            "- Include at least 20 fields across the schema, using a variety of types: `string`, `integer`, `number`, `boolean`, `array`, and `object`.\n"
+            "- Include at least one conditional block using `if`, `then`, and `else` keywords to add dynamic behavior.\n"
+            "- Use nested objects and arrays with properly defined `properties` and `items` where appropriate.\n"
+            "- Specify required fields using the `required` keyword to enforce validation rules.\n"
+            "- Include at least one example of conditional logic, such as:\n"
+            "  • If a specific field has a given value, then require additional fields.\n"
+            "  • If a condition is met, the type or structure of another field must change.\n"
+            "- Set `additionalProperties: true` at relevant levels to allow for flexible extensions.\n"
+            "- Include the `$schema` declaration as: `\"$schema\": \"http://json-schema.org/draft-07/schema#\"` at the top level.\n\n"
+            "Your response must follow this requirements:\n"
+            "- Output only the JSON Schema as a valid JSON string.\n"
+            "- Do not include any explanations, comments, examples, or markdown formatting.\n"
+            "- The output must be fully deterministic and syntactically correct.\n\n"
+            "Output:"
+        )
     )
 
 
 def json_generator_human_prompt() -> PromptTemplate:
     return PromptTemplate(
-        template="""
-        Using the provided schema:
-        {schema}
-
-        Generate {number} valid JSON instances that strictly adhere to the schema's rules and constraints, including:
-        - Required fields, field types, and specified formats.
-        - Constraints such as `minLength`, `maximum`, `enum`, `minItems`, `maxItems`, and `required` where applicable.
-
-        Output:
-        - Provide only the JSON instances as valid JSON strings.
-        - Do not include any explanations, descriptions, or additional text.
-        """,
-        input_variables=["schema", "number"]
+        input_variables=["schema", "number"],
+        template=(
+            "You are an assistant specialized in generating JSON data that conforms exactly to a given schema.\n\n"
+            "You will be provided with two inputs:\n"
+            "1. `{schema}` — A complete JSON Schema definition. This schema defines the structure, types, and constraints of valid JSON instances.\n"
+            "2. `{number}` — The number of valid JSON instances you must generate.\n\n"
+            "Your task is to generate exactly {number} JSON instances that strictly conform to the rules and constraints defined in the schema. "
+            "Each instance must satisfy all of the following where applicable:\n"
+            "- All required fields must be present.\n"
+            "- Field types must match those specified in the schema.\n"
+            "- Any constraints such as `minLength`, `maxLength`, `minimum`, `maximum`, `enum`, `pattern`, `format`, `minItems`, and `maxItems` must be respected.\n\n"
+            "Your response must follow this requirements:\n"
+            "- You must output exactly {number} valid JSON instances.\n"
+            "- Each instance must be a valid JSON string.\n"
+            "- Do not include any explanations, comments, or markdown formatting.\n"
+            "- Do not include any descriptive text — only the raw JSON instances.\n"
+            "- Each output must be deterministic and reproducible given the same schema.\n\n"
+            "Output:"
+        )
     )
 
 
 def json_modification_human_prompt() -> PromptTemplate:
     return PromptTemplate(
-        template="""
-        Given the following valid JSON instance: {json_instance}
-
-        Apply the specified modification: {instruction}
-
-        Requirements:
-        - Maintain JSON validity and adhere to all original constraints where applicable.
-        - Use only double quotes for all keys and string values.
-        - Avoid Python-style output (e.g., single quotes or capitalized keys).
-        - Do NOT wrap the output in markdown (e.g., ```json).
-        - Do NOT include any explanations, comments, or additional text.
-        - If the modification cannot be applied (e.g., appending to a non-existent array), return the original JSON instance unchanged.
-
-        Output:
-        - Only return the modified JSON instance as a valid JSON string.
-        """,
-        input_variables=["json_instance", "instruction"]
+        input_variables=["json_instance", "instruction"],
+        template=(
+            "You are an assistant specialized in applies precise modifications to JSON objects.\n\n"
+            "You will receive two inputs:\n"
+            "1. `{json_instance}` — This is a valid JSON object that must remain valid after the modification is applied.\n"
+            "2. `{instruction}` — This is a specific, unambiguous instruction written in natural language, describing exactly one modification to apply to the JSON.\n\n"
+            "Your task is to produce a new JSON object that reflects exactly the modification described in the instruction. The output must be a valid JSON object, "
+            "You must follow these strict requirements:\n"
+            "- Preserve the overall structure and constraints of the original JSON where applicable.\n"
+            "- Always use double quotes (`\"`) for all keys and all string values — never use single quotes.\n"
+            "- Output must be valid JSON only — do not include any markdown syntax (e.g., ` ```json `), comments, or extra text.\n"
+            "- The output must be a single JSON string and nothing else.\n"
+            "- If the instruction refers to a key or structure that does not exist (e.g., appending to a missing array), you must return the original JSON unchanged.\n\n"
+            "Your response must be deterministic: applying the instruction should produce one and only one correct modified JSON.\n\n"
+            "Output:"
+        )
     )
 
 
@@ -111,14 +102,20 @@ def input_modification_generator_prompt() -> PromptTemplate:
     return PromptTemplate(
         input_variables=["original_json", "modification_type"],
         template=(
-            "You are simulating a user providing a natural-language instruction to modify a JSON object.\n\n"
-            "Original JSON (for reference only, do not include it in the output):\n{original_json}\n\n"
-            "Desired Modification Type:\n{modification_type}\n\n"
-            "Task:\n"
-            "- Write a clear, direct instruction from a user to an assistant that describes the desired modification.\n"
-            "- The instruction should sound like a natural user request (e.g., 'Set the price to 29.99').\n"
-            "- Do not include quotation marks around the instruction.\n"
-            "- Do not include any explanation, justification, or formatting — only the raw instruction.\n\n"
+            "You are an assistant specialized in generating a precise and unambiguous instruction that a user might give to modify a JSON object.\n\n"
+            "You will receive two inputs:\n"
+            "1. `{original_json}` — This is the original JSON object before any modifications. You must use this only for reference to understand the context. "
+            "You must not include any part of it in your final output.\n"
+            "2. `{modification_type}` — This describes the kind of modification the user wants to make, such as changing a value, removing a key, or appending to an array.\n\n"
+            "Your task is to generate a single, clear instruction that a user would naturally say when requesting this specific type of change. "
+            "The instruction must be detailed and specific enough that exactly one modified version of the JSON object could be produced by applying the change. "
+            "There should be no ambiguity or multiple possible interpretations.\n\n"
+            "Your response must follow this requirements:\n"
+            "- Output only the instruction, phrased as a direct user request.\n"
+            "- The instruction must describe one and only one specific modification.\n"
+            "- Do not include any quotes, markdown formatting, explanations, or multiple steps.\n"
+            "- Do not reference the original JSON explicitly (e.g., don’t say 'In the JSON above...').\n\n"
+            "Your goal is to output a single line that could be read by an assistant and immediately turned into one exact change to the original JSON.\n\n"
             "Output:"
         )
     )
@@ -128,15 +125,14 @@ def description_output_modification_prompt() -> PromptTemplate:
     return PromptTemplate(
         input_variables=["before", "after"],
         template=(
-            "You are an assistant that describes changes made to a JSON object.\n\n"
-            "Original JSON:\n{before}\n\n"
-            "Modified JSON:\n{after}\n\n"
-            "Task:\n"
-            "- Provide a concise, one-sentence description of the modifications.\n"
-            "- Focus on what was added, removed, or changed.\n"
-            "- If no modification was made, state: 'No modification was made.'\n"
-            "- Do not include extra formatting or explanation.\n\n"
-            "Output: "
+            "You are a JSON modification explainer. Your task is to analyze two versions of a JSON object: "
+            "`{before}`, which represents the original version, and `{after}`, which represents the modified version. "
+            "These two inputs will be provided as raw JSON. Your job is to determine what changed between them and output "
+            "a single, concise sentence describing the modification. Focus on what was added, removed, or changed.\n\n"
+            "Your output must follow these rules:\n"
+            "- If there is no difference between the two versions, output: 'No modification was made.'\n"
+            "- Output only the description sentence, with no extra formatting, preambles, or commentary.\n\n"
+            "Output:"
         )
     )
 
