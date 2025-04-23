@@ -12,8 +12,8 @@ def generate_all_pairs(modifications_path, output_folder):
     with open(structures_file, 'r', encoding='utf-8') as f:
         structures = [line.strip() for line in f if line.strip()]
 
-    for structure in structures:
-        for theme in themes:
+    for theme in themes:
+        for structure in structures:
             g.generate_valid_data(theme, structure, modifications_path, output_folder)
 
 

@@ -109,32 +109,35 @@ def json_modification_human_prompt() -> PromptTemplate:
 
 def input_modification_generator_prompt() -> PromptTemplate:
     return PromptTemplate(
+        input_variables=["original_json", "modification_type"],
         template=(
-            r"You are simulating a user providing an instruction to modify a JSON object.\n\n"
-            r"Original JSON (for reference only, do not include in output): {original_json}\n"
-            r"Desired Modification Type: {modification_type}\n\n"
-            r"Task:\n"
-            r"- Write a clear, direct instruction from a user to an assistant that describes the desired modification.\n"
-            r"- Output the instruction only, without any explanation or formatting."
-        ),
-        input_variables=["original_json", "modification_type"]
+            "You are simulating a user providing a natural-language instruction to modify a JSON object.\n\n"
+            "Original JSON (for reference only, do not include it in the output):\n{original_json}\n\n"
+            "Desired Modification Type:\n{modification_type}\n\n"
+            "Task:\n"
+            "- Write a clear, direct instruction from a user to an assistant that describes the desired modification.\n"
+            "- The instruction should sound like a natural user request (e.g., 'Set the price to 29.99').\n"
+            "- Do not include quotation marks around the instruction.\n"
+            "- Do not include any explanation, justification, or formatting — only the raw instruction.\n\n"
+            "Output:"
+        )
     )
 
 
 def description_output_modification_prompt() -> PromptTemplate:
     return PromptTemplate(
+        input_variables=["before", "after"],
         template=(
-            r"You are an assistant explaining the modifications made to a JSON object.\n\n"
-            r"Original JSON:\n"
-            r"{before}\n\n"
-            r"Modified JSON:\n"
-            r"{after}\n\n"
-            r"Task:\n"
-            r"- Provide a concise description of the changes made, following this format: <One sentence describing what was changed>"
-            r"\n"
-            r"Output: Return only the description. Avoid any additional explanations or formatting."
-        ),
-        input_variables=["before", "after"]
+            "You are an assistant that describes changes made to a JSON object.\n\n"
+            "Original JSON:\n{before}\n\n"
+            "Modified JSON:\n{after}\n\n"
+            "Task:\n"
+            "- Provide a concise, one-sentence description of the modifications.\n"
+            "- Focus on what was added, removed, or changed.\n"
+            "- If no modification was made, state: 'No modification was made.'\n"
+            "- Do not include extra formatting or explanation.\n\n"
+            "Output: "
+        )
     )
 
 
