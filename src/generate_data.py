@@ -11,9 +11,16 @@ def generate_valid_data(theme, structure, modifications_path, output_folder):
     global counter
     generator = LLMJsonGenerator()
     print(theme, structure)
+
     # Read modification types from file
     with open(modifications_path, 'r', encoding='utf-8') as f:
         modifications = [line.strip() for line in f if line.strip()]
+
+    # Prepare output subfolders
+    instances_folder = os.path.join(output_folder, "instances")
+    diffs_folder = os.path.join(output_folder, "diffs")
+    os.makedirs(instances_folder, exist_ok=True)
+    os.makedirs(diffs_folder, exist_ok=True)
 
     # Generate JSON schema
     json_schema = generator.strict_json_schema_generator(theme, structure)
@@ -22,13 +29,12 @@ def generate_valid_data(theme, structure, modifications_path, output_folder):
         return
 
     print("✅ JSON Schema generated.")
-    file_name = f"schema_{(counter + 17)//17}.json"
-    file_path = os.path.join(output_folder, file_name)
-    with open(file_path, 'w', encoding='utf-8') as out_file:
-        json.dump(json_schema, out_file, indent=2)
 
-    # Ensure output folder exists
-    os.makedirs(output_folder, exist_ok=True)
+    # Save schema file
+    schema_file_name = f"schema_{(counter + 17)//17}.json"
+    schema_file_path = os.path.join(instances_folder, schema_file_name)
+    with open(schema_file_path, 'w', encoding='utf-8') as out_file:
+        json.dump(json_schema, out_file, indent=2)
 
     # Loop over modifications
     for modification_type in modifications:
@@ -55,20 +61,20 @@ def generate_valid_data(theme, structure, modifications_path, output_folder):
             "modification": generator.description_output_generator(origin_json, modified_json)
         }
 
-        # Write the evaluation data to a JSON file
-        file_name = f"instance_{counter}.json"
-        file_path = os.path.join(output_folder, file_name)
-        with open(file_path, 'w', encoding='utf-8') as out_file:
+        # Save evaluation instance to instances folder
+        instance_file_name = f"instance_{counter}.json"
+        instance_file_path = os.path.join(instances_folder, instance_file_name)
+        with open(instance_file_path, 'w', encoding='utf-8') as out_file:
             json.dump(eval_data, out_file, indent=2)
 
-        print(f"✅ Successfully created: {file_path}")
+        print(f"✅ Successfully created: {instance_file_path}")
 
         # Compare data and ground_truth and output diff if needed
         try:
-            is_equal = compare_json_file(file_path, output_dir=output_folder)
+            is_equal = compare_json_file(instance_file_path, output_dir=output_folder)
             if not is_equal:
-                print(f"❌ Difference written to diff_output_{counter}.txt")
+                print(f"✏️ Difference written for instance_{counter}.json")
         except Exception as e:
-            print(f"⚠️ Failed to compare JSONs for {file_path}: {str(e)}")
+            print(f"⚠️ Failed to compare JSONs for {instance_file_path}: {str(e)}")
 
         counter += 1  # Increment the global counter after each file is created
