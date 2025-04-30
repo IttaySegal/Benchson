@@ -77,6 +77,7 @@ def json_generator_human_prompt() -> PromptTemplate:
 
 
 
+
 def json_modification_human_prompt() -> PromptTemplate:
     return PromptTemplate(
         input_variables=["schema", "json_instance", "instruction"],
@@ -101,26 +102,25 @@ def json_modification_human_prompt() -> PromptTemplate:
     )
 
 
-
 def input_modification_generator_prompt() -> PromptTemplate:
     return PromptTemplate(
         input_variables=["schema", "original_json", "modification_type"],
         template=(
-            "You are an assistant specialized in generating precise, unambiguous user instructions for modifying JSON objects.\n\n"
+            "You are an assistant specialized in generating precise and executable user instructions for modifying JSON objects.\n\n"
             "You will receive three inputs:\n"
-            "1. `{schema}` — A complete JSON Schema definition. It specifies the valid structure, types, required fields, and constraints for the JSON object.\n"
-            "2. `{original_json}` — The original JSON object before any modification. This is provided only for context. You must not include or reference it in your output.\n"
+            "1. `{schema}` — A complete JSON Schema definition, specifying the valid structure, types, required fields, and constraints for the JSON object.\n"
+            "2. `{original_json}` — The original JSON object before any modification. This is provided for context only; you must not reference or mention it in your output.\n"
             "3. `{modification_type}` — A description of the type of modification the user wants to make (e.g., change a value, remove a key, append to an array).\n\n"
-            "Your task is to generate a single, clear, and natural instruction that a user might say to request the specified modification.\n"
-            "The instruction must:\n"
-            "- Be specific enough so that applying it would produce exactly one modified version of the JSON object.\n"
-            "- Only suggest changes that are valid according to the provided schema (respect field types, allowed values, required fields, structural constraints, etc.).\n"
-            "- Make sense within the context of the original JSON.\n\n"
+            "Your task is to generate a single, clear, natural-language instruction that a user might say to request the specified modification.\n\n"
+            "The instruction must follow this requirements:\n"
+            "- The instruction must be specific enough so that applying it would produce exactly one modified version of the JSON object.\n"
+            "- The instruction must describe exactly one change that can be directly and immediately applied to the original JSON object.\n"
+            "- The change must be fully legal and valid according to the provided JSON Schema (respect field types, allowed values, required fields, and constraints).\n"
+            "- The instruction must make sense in the context of the original JSON structure and content.\n"
             "Your response must follow this requirements:\n"
-            "- Output only the instruction as a natural user request.\n"
             "- Do not include any quotation marks, markdown formatting, or explanatory text.\n"
-            "- Do not reference the original JSON explicitly (e.g., do not say 'in the JSON above').\n"
-            "- Do not include multiple steps — the instruction must describe exactly one change.\n\n"
+            "- Do not reference or mention the original JSON explicitly (e.g., do not say 'in the JSON above').\n"
+            "- The instruction must describe a single, atomic change — no multi-step instructions.\n\n"
             "Your goal is to produce a single instruction that could immediately be executed by an assistant to apply one precise and schema-valid change to the JSON.\n\n"
             "Output:"
         )
@@ -138,11 +138,12 @@ def description_output_modification_prompt() -> PromptTemplate:
             "Both inputs will be provided as raw JSON strings.\n\n"
             "Your task is to carefully compare the two versions and generate a single, concise sentence that accurately describes the modification that was made.\n"
             "You must focus precisely on what was added, removed, or changed.\n\n"
-            "Important requirements for your description:\n"
+            "Your response must follow this requirements:\n"
             "- The description must be **specific and detailed**, clearly mentioning what field or value was modified.\n"
             "- The description must not be general or vague — it must describe exactly what changed.\n"
             "- If there is no difference between the two versions, output exactly: 'No modification was made.'\n"
             "- Output only the description sentence, with no extra formatting, preambles, or commentary.\n\n"
+            "- Do not include any quotation marks, markdown formatting, or explanatory text.\n"
             "Output:"
         )
     )

@@ -1,13 +1,14 @@
 import json
+import os
+import re
 from validation import json_schema_validator, json_validator
 from LLMJsonGenerator import LLMJsonGenerator
-from json_comparator import compare_json_file
-import os
+from json_comparator import compare_json_object
 
 # Global Counter for numbering files
 counter = 1
 
-def generate_valid_data(theme, structure, modifications_path, output_folder, error_folder):
+def generate_data(theme, structure, modifications_path,base_folder):
     global counter
     generator = LLMJsonGenerator()
     print(theme, structure)
@@ -16,10 +17,18 @@ def generate_valid_data(theme, structure, modifications_path, output_folder, err
     with open(modifications_path, 'r', encoding='utf-8') as f:
         modifications = [line.strip() for line in f if line.strip()]
 
-    # Prepare output subfolders
-    instances_folder = os.path.join(output_folder, "instances")
-    diffs_folder = os.path.join(output_folder, "diffs")
-    os.makedirs(instances_folder, exist_ok=True)
+    # Output folders
+    output_folder = os.path.join(base_folder, 'data')
+    error_folder = os.path.join(base_folder, 'errors')
+    no_change_folder = os.path.join(base_folder, 'no_changes')
+    schema_folder = os.path.join(base_folder, "schemas")
+    diffs_folder = os.path.join(base_folder, "diffs")
+
+    # Ensure all folders exist
+    os.makedirs(output_folder, exist_ok=True)
+    os.makedirs(error_folder, exist_ok=True)
+    os.makedirs(no_change_folder, exist_ok=True)
+    os.makedirs(schema_folder, exist_ok=True)
     os.makedirs(diffs_folder, exist_ok=True)
 
     # Generate JSON schema
@@ -35,8 +44,9 @@ def generate_valid_data(theme, structure, modifications_path, output_folder, err
     os.makedirs(error_folder, exist_ok=True)
 
     # Save schema file
-    schema_file_name = f"schema_{(counter + 17)//17}.json"
-    schema_file_path = os.path.join(instances_folder, schema_file_name)
+    name = re.split(r'[^a-zA-Z0-9]', structure.strip())[0]
+    schema_file_name = f"schema_{theme}_{name}.json"
+    schema_file_path = os.path.join(schema_folder, schema_file_name)
     with open(schema_file_path, 'w', encoding='utf-8') as out_file:
         json.dump(json_schema, out_file, indent=2)
 
@@ -65,7 +75,7 @@ def generate_valid_data(theme, structure, modifications_path, output_folder, err
                 "origin_json": origin_json,
                 "instruction": instruction,
                 "modified_json": modified_json
-            }, modification_type, error_folder, error_type="modified_invalid")
+            }, json_schema, modification_type, error_folder, error_type="modified_invalid")
             continue
 
         # Create the JSON structure for evaluation
@@ -76,26 +86,27 @@ def generate_valid_data(theme, structure, modifications_path, output_folder, err
             "modification": generator.description_output_generator(origin_json, modified_json)
         }
 
-        # Save evaluation instance to instances folder
-        instance_file_name = f"instance_{counter}.json"
-        instance_file_path = os.path.join(instances_folder, instance_file_name)
-        with open(instance_file_path, 'w', encoding='utf-8') as out_file:
+        # Compare using eval_data
+        is_equal = compare_json_object(eval_data, diffs_folder=diffs_folder, instance_id=str(counter))
+
+        # Decide folder based on whether a real change occurred
+        if is_equal:
+            target_folder = no_change_folder
+            print(f"⚠️ No change detected for {modification_type} saving in no-change folder.")
+        else:
+            target_folder = output_folder
+            print(f"✅ Change detected for {modification_type} saving in instances folder.")
+
+        # Write the evaluation data to a JSON file
+        file_name = f"instance_{counter}.json"
+        file_path = os.path.join(target_folder, file_name)
+        with open(file_path, 'w', encoding='utf-8') as out_file:
             json.dump(eval_data, out_file, indent=2)
-
-        print(f"✅ Successfully created: {instance_file_path}")
-
-        # Compare data and ground_truth and output diff if needed
-        try:
-            is_equal = compare_json_file(instance_file_path, output_dir=output_folder)
-            if not is_equal:
-                print(f"✏️ Difference written for instance_{counter}.json")
-        except Exception as e:
-            print(f"⚠️ Failed to compare JSONs for {instance_file_path}: {str(e)}")
 
         counter += 1  # Increment the global counter after each file is created
 
 
-def save_error_case(error_data, modification_type, error_folder, error_type="error"):
+def save_error_case(error_data, json_schema, modification_type, error_folder, error_type="error"):
     """
     Save error JSONs separately for analysis.
     """
@@ -104,6 +115,7 @@ def save_error_case(error_data, modification_type, error_folder, error_type="err
     error_path = os.path.join(error_folder, error_filename)
 
     error_record = {
+        "schema": json_schema,
         "modification_type": modification_type,
         "error_type": error_type,
         "error_data": error_data

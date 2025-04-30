@@ -3,22 +3,6 @@ import os
 import re
 from deepdiff import DeepDiff
 
-
-def compare_json_data(data, ground_truth, ignore_order=False):
-    """
-    Compare two JSON-compatible Python objects using DeepDiff.
-
-    Args:
-        data (dict or list): Original JSON data.
-        ground_truth (dict or list): Expected JSON after modification.
-        ignore_order (bool): Whether to ignore array ordering.
-
-    Returns:
-        DeepDiff: Differences found by DeepDiff (empty if equal).
-    """
-    return DeepDiff(data, ground_truth, ignore_order=ignore_order)
-
-
 def classify_diff(diff):
     """
     Classify the type of difference found in a JSON comparison.
@@ -96,55 +80,38 @@ def clean_deepdiff_paths(diff_dict):
     return cleaned_diff
 
 
-def compare_json_file(file_path, output_dir=None):
+def compare_json_object(eval_data, diffs_folder=None, instance_id=None):
     """
-    Compare 'data' and 'ground_truth' from a JSON file.
+    Compare 'data' and 'ground_truth' from an eval_data object.
     If differences are found, write them to a corresponding diff_output_X.txt file.
 
     Args:
-        file_path (str): Path to the JSON file to compare.
-        output_dir (str or None): Optional root directory to save output folders.
-                                  If None, uses the same directory as file_path.
+        eval_data (dict): The JSON evaluation data containing 'data' and 'ground_truth'.
+        diffs_folder (str or None): Directory to save diffs if needed.
+        instance_id (str or None): Optional ID to name output files uniquely.
 
     Returns:
         bool: True if the data matches ground_truth, False otherwise.
     """
-    with open(file_path, 'r', encoding='utf-8') as f:
-        full_data = json.load(f)
-
-    data = full_data.get("data")
-    ground_truth = full_data.get("ground_truth")
+    data = eval_data.get("data")
+    ground_truth = eval_data.get("ground_truth")
 
     if data is None or ground_truth is None:
-        raise ValueError("Missing 'data' or 'ground_truth' in the file.")
+        raise ValueError("Missing 'data' or 'ground_truth' in eval_data.")
 
-    diff = compare_json_data(data, ground_truth)
+    diff = DeepDiff(data, ground_truth, False)
 
     if not diff:
         return True
 
     diff_classification = classify_diff(diff)
 
-    # Parse instance ID
-    base_name = os.path.basename(file_path)  # e.g., instance_1.json
-    instance_id = os.path.splitext(base_name)[0].split("_")[-1]  # extract "1"
-
-    # Create diffs folder
-    if output_dir is None:
-        output_dir = os.path.dirname(file_path)
-    diffs_folder = os.path.join(output_dir, "diffs")
-    os.makedirs(diffs_folder, exist_ok=True)
-
-    # Full diff output path
     output_path = os.path.join(diffs_folder, f"diff_output_{instance_id}.txt")
 
-    # Write diff and classification to file
     with open(output_path, 'w', encoding='utf-8') as out:
         out.write(f"Diff classification: {diff_classification}\n\n")
-
         diff_dict = json.loads(diff.to_json())
         cleaned_diff = clean_deepdiff_paths(diff_dict)
-
         out.write(json.dumps(cleaned_diff, indent=2, ensure_ascii=False))
 
     return False
