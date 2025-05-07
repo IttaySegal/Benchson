@@ -1,0 +1,162 @@
+strict_json_schema:
+  input_variables:
+    - theme
+    - structure
+  template: |
+    You are an assistant specialized in generating JSON Schemas that conform to the JSON Schema Draft-07 specification.
+    Your task is to create a strictly valid JSON Schema based on the following two input parameters:
+    1. `theme: {theme}` — This describes the high-level subject or domain the schema should represent.
+    2. `structure: {structure}` — This describes the general layout or conceptual organization of the schema.
+
+    Based on these inputs, you must generate a JSON Schema that meets the following requirements:
+    - Clearly represents the theme through semantically appropriate and logically named properties.
+    - Strictly conforms to the JSON Schema Draft-07 standard.
+    - The schema must include between 20 and 40 properties in total.
+    - The schema must include at least one property of each of the following types: `string`, `integer`, `float`, `boolean`, `array`, and `object`.
+    - Each field must be explicitly defined using the `type` keyword.
+    - Include additional constraints like minLength, maximum, enum, minItems, maxItems, required only when applicable and relevant to the theme.
+    - Include arrays with a valid `items` definition and objects with nested properties when applicable.
+    - Sets `additionalProperties: false` on all object definitions to restrict extra fields.
+    - Specifies the $schema field as http://json-schema.org/draft-07/schema#.
+
+    Your response must follow these requirements:
+    - Only the JSON Schema as a valid JSON string.
+    - Do not include any explanations, comments, examples, or markdown formatting.
+    Output:
+
+
+dynamic_json_schema:
+  input_variables:
+    - theme
+    - structure
+  template: |
+    You are an assistant specialized in generating JSON Schemas that conform to the JSON Schema Draft-07 specification.
+    You will produce a single, strictly valid JSON Schema based on:
+
+    1. `theme: {theme}` — This describes the high-level subject or domain the schema should represent.
+    2. `structure: {structure}` — This describes the general layout or conceptual organization of the schema.
+
+    Based on these inputs, you must generate a JSON Schema that meets the following requirements:
+    - Include the `$schema` declaration: `{{"$schema": "http://json-schema.org/draft-07/schema#"}}`.
+    - Include at least **20 named fields** across various types (`string`, `integer`, `number`, `boolean`, `array`, `object`).
+    - The schema must use **nested** objects and arrays, each with its own `properties` and `items` definitions.
+    - The schema must include **conditional logic** with `if` / `then` / `else` to alter requirements or types based on field values.
+    - The schema must introduce **dynamic property rules**:
+      • Use `patternProperties` to allow keys matching a regex (e.g., `metadata_<something>`).
+      • Set `additionalProperties: {{ "type": ["string","number","boolean","object"] }}` at one or more levels to permit extensibility.
+    - Mark a sensible subset of fields as `required` to enforce core validation rules.
+
+    Your response must follow these requirements:
+    - Only the JSON Schema as a valid JSON string.
+    - Do not include any explanations, comments, examples, or markdown formatting.
+    Output:
+
+
+json_instance:
+  input_variables:
+    - schema
+    - number
+  template: |
+    You are an assistant specialized in generating JSON data that conforms exactly to a given schema.
+
+    You will receive two inputs:
+    1. `{schema}` — A complete JSON Schema definition. This schema defines the structure, types, and constraints of valid JSON instances.
+    2. `{number}` — The number of valid JSON instances you must generate.
+
+    Your task is to generate exactly {number} JSON instances that strictly conform to the rules and constraints defined in the schema.
+    Each instance must satisfy all of the following requirements:
+    - All required fields must be present.
+    - Field types must match those specified in the schema.
+    - Any constraints such as `minLength`, `maxLength`, `minimum`, `maximum`, `enum`, `pattern`, `format`, `minItems`, and `maxItems` must be respected.
+
+    Your response must follow these requirements:
+    - You must output exactly {number} valid JSON instances.
+    - Each instance must be a valid JSON string.
+    - Do not include any explanations, comments, or markdown formatting.
+    - Do not include any descriptive text — only the raw JSON instances.
+    Output:
+
+
+input_instruction:
+  input_variables:
+    - schema
+    - original_json
+    - modification_type
+  template: |
+    You are an assistant specialized in generating precise and executable user instructions for modifying JSON objects.
+
+    You will receive three inputs:
+    1. `{schema}` — A complete JSON Schema definition, specifying the valid structure, types, required fields, and constraints for the JSON object.
+    2. `{original_json}` — The original JSON object before any modification. This is provided for context only; you must not reference or mention it in your output.
+    3. `{modification_type}` — A description of the type of modification the user wants to make (e.g., change a value, remove a key, append to an array).
+
+    Your task is to generate a single, clear, natural-language instruction that a user might say to request the specified modification.
+
+    The instruction must follow these requirements:
+    - The instruction must be specific enough so that applying it would produce exactly one modified version of the JSON object.
+    - The instruction must describe exactly one change that can be directly and immediately applied to the original JSON object.
+    - The change must be fully legal and valid according to the provided JSON Schema (respect field types, allowed values, required fields, and constraints).
+    - The instruction must make sense in the context of the original JSON structure and content.
+
+    Your response must follow these requirements:
+    - Do not include any quotation marks, markdown formatting, or explanatory text.
+    - Do not reference or mention the original JSON explicitly (e.g., do not say 'in the JSON above').
+    - The instruction must describe a single, atomic change — no multi-step instructions.
+
+    Your goal is to produce a single instruction that could immediately be executed by an assistant to apply one precise and schema-valid change to the JSON.
+
+    Output:
+
+
+modify_json:
+  input_variables:
+    - schema
+    - json_instance
+    - instruction
+  template: |
+    You are an assistant specialized in applying precise modifications to JSON objects while ensuring strict adherence to a provided schema.
+
+    You will receive three inputs:
+    1. `{schema}` — A complete JSON Schema definition. This schema defines the allowed structure, types, required fields, and constraints for valid JSON instances.
+    2. `{json_instance}` — A valid JSON object that must remain valid according to the schema after the modification is applied.
+    3. `{instruction}` — A specific, unambiguous instruction describing exactly one modification to apply to the JSON.
+
+    Your task is to modify the JSON instance according to the instruction while following these strict requirements:
+    - The modified JSON must continue to fully comply with the provided schema.
+    - You must not introduce any changes that would violate field types, required fields, value constraints (such as `minLength`, `maximum`, `enum`, `pattern`, etc.), or structural rules defined in the schema.
+    - If applying the instruction would cause the JSON to become invalid under the schema, you must return the original JSON instance unchanged.
+    - You must preserve the overall structure and constraints of the original JSON wherever possible.
+
+    Your response must follow these requirements:
+    - Always use double quotes (`"`) for all keys and string values — never use single quotes.
+    - The output must be valid JSON only — do not include any markdown syntax (e.g., ```json), comments, or any explanatory text.
+    - The output must be a single valid JSON string and nothing else.
+    - The response must be deterministic: applying the instruction should result in exactly one correct modified JSON instance.
+
+    Output:
+
+
+description:
+  input_variables:
+    - before
+    - after
+  template: |
+    You are a JSON modification explainer. Your task is to analyze two versions of a JSON object:
+
+    You will receive two inputs:
+    1. `{before}` — the original version of the JSON object.
+    2. `{after}` — the modified version of the JSON object.
+
+    Both inputs will be provided as raw JSON strings.
+
+    Your task is to carefully compare the two versions and generate a single, concise sentence that accurately describes the modification that was made.
+    You must focus precisely on what was added, removed, or changed.
+
+    Your response must follow these requirements:
+    - The description must be **specific and detailed**, clearly mentioning what field or value was modified.
+    - The description must not be general or vague — it must describe exactly what changed.
+    - If there is no difference between the two versions, output exactly: 'No modification was made.'
+    - Output only the description sentence, with no extra formatting, preambles, or commentary.
+    - Do not include any quotation marks, markdown formatting, or explanatory text.
+
+    Output:

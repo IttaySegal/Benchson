@@ -2,14 +2,12 @@ import json
 import os
 import re
 from validation import json_schema_validator, json_validator
-from LLMJsonGenerator import LLMJsonGenerator
+from LLM_json_generator import LLMJsonGenerator
 from json_comparator import compare_json_object
+from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 
-# Global Counter for numbering files
-counter = 1
 
-def generate_data(theme, structure, modifications_path,base_folder):
-    global counter
+def generate_data(counter, theme, structure, modifications_path,base_folder, schema_type):
     generator = LLMJsonGenerator()
     print(theme, structure)
 
@@ -18,64 +16,98 @@ def generate_data(theme, structure, modifications_path,base_folder):
         modifications = [line.strip() for line in f if line.strip()]
 
     # Output folders
-    output_folder = os.path.join(base_folder, 'data')
-    error_folder = os.path.join(base_folder, 'errors')
-    no_change_folder = os.path.join(base_folder, 'no_changes')
-    schema_folder = os.path.join(base_folder, "schemas")
-    diffs_folder = os.path.join(base_folder, "diffs")
+    names = ['data', 'errors', 'no_changes', 'schemas', 'diffs']
+    folders = {n: os.path.join(base_folder, n) for n in names}
+    for path in folders.values():
+        os.makedirs(path, exist_ok=True)
 
-    # Ensure all folders exist
-    os.makedirs(output_folder, exist_ok=True)
-    os.makedirs(error_folder, exist_ok=True)
-    os.makedirs(no_change_folder, exist_ok=True)
-    os.makedirs(schema_folder, exist_ok=True)
-    os.makedirs(diffs_folder, exist_ok=True)
 
     # Generate JSON schema
-    json_schema = generator.strict_json_schema_generator(theme, structure)
-    if not json_schema_validator(json_schema):
-        print("❌ JSON schema not valid.")
-        return
+    json_schema = generator.prompt_generator(JsonOutputParser, {
+        "name": f"{schema_type}_json_schema",
+        "input_variables": {
+            "theme": theme,
+            "structure": structure
+        }
+    })
+
+    valid, error = json_schema_validator(json_schema)
+    if not valid:
+        print(f"❌ JSON schema not valid: {error}")
+        return counter
 
     print("✅ JSON Schema generated.")
-
-    # Ensure output and error folders exist
-    os.makedirs(output_folder, exist_ok=True)
-    os.makedirs(error_folder, exist_ok=True)
 
     # Save schema file
     name = re.split(r'[^a-zA-Z0-9]', structure.strip())[0]
     schema_file_name = f"schema_{theme}_{name}.json"
-    schema_file_path = os.path.join(schema_folder, schema_file_name)
+    schema_file_path = os.path.join(folders['schemas'], schema_file_name)
     with open(schema_file_path, 'w', encoding='utf-8') as out_file:
         json.dump(json_schema, out_file, indent=2)
 
     # Loop over modifications
-    for modification_type in modifications:
+    for mod in modifications:
         # Generate original JSON
-        origin_json = generator.json_generator(json_schema, 1)
+        origin_json = generator.prompt_generator(JsonOutputParser, {
+            "name": "json_instance",
+            "input_variables": {
+                "schema": json_schema,
+                "number": 1
+            }
+        })
 
         if not json_validator(origin_json, json_schema):
-            print(f"❌ Original JSON not valid against schema for modification: {modification_type}")
-            save_error_case(origin_json, modification_type, error_folder, error_type="origin_invalid")
+            print(f"❌ Original JSON not valid against schema for modification: {mod}")
+            save_error_case(counter, {"origin_json": origin_json},
+                            json_schema, mod, folders['errors'], error_type="origin_invalid")
+            counter += 1
             continue
 
         # Special case handling
-        if modification_type == "Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.":
-            instruction = generator.input_generator(json_schema, origin_json, "Add duplicate elements to an array: Insert one or more values that are already present in the array to create duplicates.")
-            origin_json = generator.modified_json_generator(json_schema, origin_json, instruction)
+        if mod == "Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.":
+            instruction = generator.prompt_generator(StrOutputParser, {
+                "name": "input_instruction",
+                "input_variables": {
+                    "schema": json_schema,
+                    "original_json": origin_json,
+                    "modification_type": "Add duplicate elements to an array: Insert one or more values that are already present in the array to create duplicates."
+                }
+            })
+            origin_json = generator.prompt_generator(JsonOutputParser,{
+                "name": "modify_json",
+                "input_variables": {
+                    "schema": json_schema,
+                    "json_instance": origin_json,
+                    "instruction": instruction
+                }
+            })
 
-        instruction = generator.input_generator(json_schema, origin_json, modification_type)
-        modified_json = generator.modified_json_generator(json_schema, origin_json, instruction)
+        instruction = generator.prompt_generator(StrOutputParser, {
+            "name": "input_instruction",
+            "input_variables": {
+                "schema": json_schema,
+                "original_json": origin_json,
+                "modification_type": mod
+            }
+        })
+        modified_json = generator.prompt_generator(JsonOutputParser,{
+                "name": "modify_json",
+                "input_variables": {
+                    "schema": json_schema,
+                    "json_instance": origin_json,
+                    "instruction": instruction
+                }
+            })
 
         # Validate modified JSON
         if not json_validator(modified_json, json_schema):
-            print(f"❌ Modified JSON is INVALID against schema for modification: {modification_type}")
-            save_error_case({
+            print(f"❌ Modified JSON is INVALID against schema for modification: {mod}")
+            save_error_case(counter, {
                 "origin_json": origin_json,
                 "instruction": instruction,
                 "modified_json": modified_json
-            }, json_schema, modification_type, error_folder, error_type="modified_invalid")
+            }, json_schema, mod, folders['errors'], error_type="modified_invalid")
+            counter += 1
             continue
 
         # Create the JSON structure for evaluation
@@ -83,19 +115,25 @@ def generate_data(theme, structure, modifications_path,base_folder):
             "data": origin_json,
             "instructions": instruction,
             "ground_truth": modified_json,
-            "modification": generator.description_output_generator(origin_json, modified_json)
+            "modification": generator.prompt_generator(StrOutputParser, {
+                "name": "description",
+                "input_variables": {
+                    "before": origin_json,
+                    "after": modified_json
+                }
+            })
         }
 
         # Compare using eval_data
-        is_equal = compare_json_object(eval_data, diffs_folder=diffs_folder, instance_id=str(counter))
+        is_equal = compare_json_object(eval_data, diffs_folder=folders['diffs'], instance_id=str(counter))
 
         # Decide folder based on whether a real change occurred
         if is_equal:
-            target_folder = no_change_folder
-            print(f"⚠️ No change detected for {modification_type} saving in no-change folder.")
+            target_folder = folders['no_changes']
+            print(f"⚠️ No change detected for {mod} saving in no-change folder.")
         else:
-            target_folder = output_folder
-            print(f"✅ Change detected for {modification_type} saving in instances folder.")
+            target_folder = folders['data']
+            print(f"✅ Change detected for {mod} saving in instances folder.")
 
         # Write the evaluation data to a JSON file
         file_name = f"instance_{counter}.json"
@@ -103,14 +141,14 @@ def generate_data(theme, structure, modifications_path,base_folder):
         with open(file_path, 'w', encoding='utf-8') as out_file:
             json.dump(eval_data, out_file, indent=2)
 
-        counter += 1  # Increment the global counter after each file is created
+        counter += 1
 
+    return counter
 
-def save_error_case(error_data, json_schema, modification_type, error_folder, error_type="error"):
+def save_error_case(counter, error_data, json_schema, modification_type, error_folder, error_type="error"):
     """
     Save error JSONs separately for analysis.
     """
-    global counter
     error_filename = f"error_{error_type}_{counter}.json"
     error_path = os.path.join(error_folder, error_filename)
 
@@ -125,4 +163,3 @@ def save_error_case(error_data, json_schema, modification_type, error_folder, er
         json.dump(error_record, error_file, indent=2)
 
     print(f"⚠️  Saved error case: {error_path}")
-    counter += 1

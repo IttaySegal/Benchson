@@ -176,3 +176,6 @@ cython_debug/
 # JetBrains IDE (PyCharm, IntelliJ) project files
 .idea/
 *.iml
+
+# draft
+/lists/draft/

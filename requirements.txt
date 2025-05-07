@@ -2,3 +2,4 @@ langchain-ibm==0.3.8
 langchain-core~=0.3.47
 jsonschema
 DeepDiff
+PyYAML>=6.0
