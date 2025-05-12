@@ -48,100 +48,106 @@ def generate_data(counter, theme, structure, modifications_path,base_folder, sch
     # Loop over modifications
     for mod in modifications:
         # Generate original JSON
-        origin_json = generator.prompt_generator(JsonOutputParser, {
+        json_instances = generator.prompt_generator(JsonOutputParser, {
             "name": "json_instance",
             "input_variables": {
                 "schema": json_schema,
                 "number": 1
             }
         })
+        for origin_json in json_instances:
 
-        if not json_validator(origin_json, json_schema):
-            print(f"❌ Original JSON not valid against schema for modification: {mod}")
-            save_error_case(counter, {"origin_json": origin_json},
-                            json_schema, mod, folders['errors'], error_type="origin_invalid")
-            counter += 1
-            continue
+            if not json_validator(origin_json, json_schema):
+                print(f"❌ Original JSON not valid against schema for modification: {mod}")
+                save_error_case(counter, {"origin_json": origin_json},
+                                json_schema, mod, folders['errors'], error_type="origin_invalid")
+                counter += 1
+                continue
 
-        # Special case handling
-        if mod == "Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.":
+            # Special case for “Remove duplicate elements…”:
+            # Since the original JSON instance may not actually contain any duplicates to remove,
+            # we first inject duplicates by applying an “Add duplicate elements to an array” modification.
+            # That gives us a new JSON (with guaranteed duplicates), which we then feed into the normal
+            # “Remove duplicate elements” instruction below.
+            if mod == "Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.":
+                instruction = generator.prompt_generator(StrOutputParser, {
+                    "name": "input_instruction",
+                    "input_variables": {
+                        "schema": json_schema,
+                        "original_json": origin_json,
+                        "modification_type": "Add duplicate elements to an array: Insert one or more values that are already present in the array to create duplicates."
+                    }
+                })
+                origin_json = generator.prompt_generator(JsonOutputParser,{
+                    "name": "modify_json",
+                    "input_variables": {
+                        "schema": json_schema,
+                        "json_instance": origin_json,
+                        "instruction": instruction
+                    }
+                })
+            # Generate the actual instruction for the requested modification (including the cleaned-up
+            # “Remove duplicate elements…” case above) and apply it
             instruction = generator.prompt_generator(StrOutputParser, {
                 "name": "input_instruction",
                 "input_variables": {
                     "schema": json_schema,
                     "original_json": origin_json,
-                    "modification_type": "Add duplicate elements to an array: Insert one or more values that are already present in the array to create duplicates."
+                    "modification_type": mod
                 }
             })
-            origin_json = generator.prompt_generator(JsonOutputParser,{
-                "name": "modify_json",
-                "input_variables": {
-                    "schema": json_schema,
-                    "json_instance": origin_json,
-                    "instruction": instruction
-                }
-            })
+            modified_json = generator.prompt_generator(JsonOutputParser,{
+                    "name": "modify_json",
+                    "input_variables": {
+                        "schema": json_schema,
+                        "json_instance": origin_json,
+                        "instruction": instruction
+                    }
+                })
 
-        instruction = generator.prompt_generator(StrOutputParser, {
-            "name": "input_instruction",
-            "input_variables": {
-                "schema": json_schema,
-                "original_json": origin_json,
-                "modification_type": mod
+            # Validate modified JSON
+            if not json_validator(modified_json, json_schema):
+                print(f"❌ Modified JSON is INVALID against schema for modification: {mod}")
+                save_error_case(counter, {
+                    "origin_json": origin_json,
+                    "instruction": instruction,
+                    "modified_json": modified_json
+                }, json_schema, mod, folders['errors'], error_type="modified_invalid")
+                counter += 1
+                continue
+
+            # Create the JSON structure for evaluation
+            eval_data = {
+                "data": origin_json,
+                "instructions": instruction,
+                "ground_truth": modified_json,
+                "modification": generator.prompt_generator(StrOutputParser, {
+                    "name": "description",
+                    "input_variables": {
+                        "before": origin_json,
+                        "after": modified_json
+                    }
+                })
             }
-        })
-        modified_json = generator.prompt_generator(JsonOutputParser,{
-                "name": "modify_json",
-                "input_variables": {
-                    "schema": json_schema,
-                    "json_instance": origin_json,
-                    "instruction": instruction
-                }
-            })
 
-        # Validate modified JSON
-        if not json_validator(modified_json, json_schema):
-            print(f"❌ Modified JSON is INVALID against schema for modification: {mod}")
-            save_error_case(counter, {
-                "origin_json": origin_json,
-                "instruction": instruction,
-                "modified_json": modified_json
-            }, json_schema, mod, folders['errors'], error_type="modified_invalid")
+            # Compare using eval_data
+            is_equal = compare_json_object(eval_data, diffs_folder=folders['diffs'], instance_id=str(counter))
+
+            # Decide folder based on whether a real change occurred
+            if is_equal:
+                target_folder = folders['no_changes']
+                print(f"⚠️ No change detected for {mod} saving in no-change folder.")
+            else:
+                target_folder = folders['data']
+                print(f"✅ Change detected for {mod} saving in instances folder.")
+
+            # Write the evaluation data to a JSON file
+            file_name = f"instance_{counter}.json"
+            file_path = os.path.join(target_folder, file_name)
+            with open(file_path, 'w', encoding='utf-8') as out_file:
+                json.dump(eval_data, out_file, indent=2)
+
             counter += 1
-            continue
-
-        # Create the JSON structure for evaluation
-        eval_data = {
-            "data": origin_json,
-            "instructions": instruction,
-            "ground_truth": modified_json,
-            "modification": generator.prompt_generator(StrOutputParser, {
-                "name": "description",
-                "input_variables": {
-                    "before": origin_json,
-                    "after": modified_json
-                }
-            })
-        }
-
-        # Compare using eval_data
-        is_equal = compare_json_object(eval_data, diffs_folder=folders['diffs'], instance_id=str(counter))
-
-        # Decide folder based on whether a real change occurred
-        if is_equal:
-            target_folder = folders['no_changes']
-            print(f"⚠️ No change detected for {mod} saving in no-change folder.")
-        else:
-            target_folder = folders['data']
-            print(f"✅ Change detected for {mod} saving in instances folder.")
-
-        # Write the evaluation data to a JSON file
-        file_name = f"instance_{counter}.json"
-        file_path = os.path.join(target_folder, file_name)
-        with open(file_path, 'w', encoding='utf-8') as out_file:
-            json.dump(eval_data, out_file, indent=2)
-
-        counter += 1
 
     return counter
 

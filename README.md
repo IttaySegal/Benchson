@@ -1,1 +1,207 @@
+<p align="center">
+  <img src="assets/benchson.png" alt="Benchson Logo" width="500" />
+</p>
+
 # Benchson
+
+**Benchson** is a toolkit for **automatically generating**, **modifying**, and **evaluating** JSON Schemas and JSON instances using a large language model (IBM Watsonx LLM). It supports both **strict** and **dynamic** schema generation, instance creation, schema-valid modifications, and comprehensive diff reporting.
+
+---
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Project Index](#project-index)
+4. [Getting Started](#getting-started)
+
+   * [Prerequisites](#prerequisites)
+   * [Installation](#installation)
+5. [Usage](#usage)
+6. [Contributing](#contributing)
+7. [License](#license)
+8. [Acknowledgments](#acknowledgments)
+
+---
+
+## Overview
+
+Benchson streamlines JSON data management by offering an end-to-end solution for:
+
+* Generating **valid JSON Schemas** (strict & dynamic).
+* Producing **JSON instances** conforming to those schemas.
+* Applying **schema-valid modifications** to JSON data.
+* **Validating**, **diffing**, and **reporting** changes automatically.
+
+Ideal for projects that require rigorous JSON handling, schema evolution testing, and automation of data integrity workflows.
+
+---
+
+---
+
+---
+
+## Features
+
+| Category                | Details                                                                                                                                                                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 📐 Schema Generation    | Create draft-07 compliant **strict** schemas (with `additionalProperties: false`) or **dynamic** schemas (nested objects, arrays, `if`/`then`/`else`, `patternProperties`), **excluding** support for `$ref` references. |
+| 📄 Instance Generation  | Generate JSON instances that **exactly** match any given schema.                                                                                                                                                         |
+| 🔄 Valid Modifications  | Apply transformations (add/remove fields, rename keys, type conversions, conditional updates) while preserving validity.                                                                                                 |
+| 🔍 Validation & Quality | Use `jsonschema` to validate schemas and instances.                                                                                                                                                                      |
+| 🔬 Diff & Reporting     | Leverage `DeepDiff` to detect and classify changes, and produce human-readable reports.                                                                                                                                  |
+| ⚙️ Extensible Prompts   | Define or tune prompts in YAML for both schema and instance generation.                                                                                                                                                  |
+| 🔌 LLM Integration      | Plug-and-play with IBM Watsonx LLM (extendable to other LLM backends).                                                                                                                                                   |
+
+## Project Index
+
+```
+Benchson/
+├── config
+├── lists
+│   ├── themes.txt
+│   ├── structures.txt
+│   ├── modifications_for_strict_schema.txt
+│   └── modifications_for_dynamic_schema.txt
+├── src
+│   ├── main.py
+│   ├── generate_data.py
+│   ├── LLM_json_generator.py
+│   ├── validation.py
+│   ├── json_comparator.py
+│   └── prompts.yaml
+├── .env.sample
+├── requirements.txt
+└── .gitignore
+```
+
+---
+
+## Getting Started
+
+Follow these steps to get Benchson up and running locally.
+
+### Prerequisites
+
+* Python 3.8+
+* `pip` package manager
+* IBM Watsonx LLM credentials (or another supported LLM endpoint)
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/your-org/benchson.git
+   cd benchson
+   ```
+
+2. **Create & activate a virtual environment**
+
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. **Install dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure environment variables**
+   Copy `.env.sample` to `.env` and add your LLM credentials:
+
+   ```dotenv
+   WATSONX_API_ENDPOINT=...
+   WATSONX_PROJECT_ID=...
+   WATSONX_API_KEY=...
+   ```
+
+---
+
+## Usage
+
+Run the Benchson pipeline to generate schemas, instances, apply modifications, validate, and produce diff reports:
+
+```bash
+python src/main.py
+```
+
+**Output Organization**
+
+Benchson writes outputs under the `data/` directory with separate folders for each schema type:
+
+```
+data/
+├── data_strict_schema/
+│   ├── data/
+│   ├── errors/
+│   ├── no_changes/
+│   ├── schemas/
+│   └── diffs/
+└── data_dynamic_schema/
+    ├── data/
+    ├── errors/
+    ├── no_changes/
+    ├── schemas/
+    └── diffs/
+```
+
+Within each schema-type folder:
+
+* `data/` — successful modifications with real changes
+* `errors/` — validation failures
+* `no_changes/` — operations that resulted in no diff
+* `schemas/` — generated schema files
+* `diffs/` — human-readable change reports
+
+---
+
+## Contributing
+
+💬 Join the Discussions: Share your insights, provide feedback, or ask questions.
+🐛 Report Issues: Submit bugs found or log feature requests for the project.
+💡 Submit Pull Requests: Review open PRs, and submit your own PRs.
+
+**Contributing Guidelines**
+
+1. **Fork the Repository**: Start by forking the project repository to your GitHub account.
+2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
+
+   ```bash
+   git clone https://github.com/your-org/benchson.git
+   ```
+3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
+
+   ```bash
+   git checkout -b new-feature-x
+   ```
+4. **Make Your Changes**: Develop and test your changes locally.
+5. **Commit Your Changes**: Commit with a clear message describing your updates.
+
+   ```bash
+   git commit -m 'Implemented new feature x.'
+   ```
+6. **Push to GitHub**: Push the changes to your forked repository.
+
+   ```bash
+   git push origin new-feature-x
+   ```
+7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
+8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
+
+---
+
+## License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgments
+
+* [IBM Watsonx](https://cloud.ibm.com) for the LLM services.
+* [jsonschema](https://pypi.org/project/jsonschema/) for schema validation.
+* [DeepDiff](https://github.com/seperman/deepdiff) for JSON comparison.
+* Community contributors and early adopters for feedback and testing.

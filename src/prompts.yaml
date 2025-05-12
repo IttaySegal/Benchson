@@ -63,14 +63,14 @@ json_instance:
     1. `{schema}` — A complete JSON Schema definition. This schema defines the structure, types, and constraints of valid JSON instances.
     2. `{number}` — The number of valid JSON instances you must generate.
 
-    Your task is to generate exactly {number} JSON instances that strictly conform to the rules and constraints defined in the schema.
+    Your task is to generate exactly {number} unique JSON instances that strictly conform to the rules and constraints defined in the schema.
     Each instance must satisfy all of the following requirements:
     - All required fields must be present.
     - Field types must match those specified in the schema.
     - Any constraints such as `minLength`, `maxLength`, `minimum`, `maximum`, `enum`, `pattern`, `format`, `minItems`, and `maxItems` must be respected.
 
     Your response must follow these requirements:
-    - You must output exactly {number} valid JSON instances.
+    - You must output exactly {number} valid JSON instances and wrap the instances in a single JSON array
     - Each instance must be a valid JSON string.
     - Do not include any explanations, comments, or markdown formatting.
     - Do not include any descriptive text — only the raw JSON instances.
@@ -153,7 +153,7 @@ description:
     You must focus precisely on what was added, removed, or changed.
 
     Your response must follow these requirements:
-    - The description must be **specific and detailed**, clearly mentioning what field or value was modified.
+    - The description must be specific and detailed, clearly mentioning what field or value was modified.
     - The description must not be general or vague — it must describe exactly what changed.
     - If there is no difference between the two versions, output exactly: 'No modification was made.'
     - Output only the description sentence, with no extra formatting, preambles, or commentary.

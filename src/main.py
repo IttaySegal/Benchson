@@ -15,7 +15,7 @@ if __name__ == "__main__":
     with open(structures_file, 'r', encoding='utf-8') as f:
         structures = [line.strip() for line in f if line.strip()]
 
-    schema_types = ["dynamic", "strict"]
+    schema_types = ["strict", "dynamic", "strict"]
 
     for  schema_type in schema_types:
         folder = os.path.join(base_folder, f'data_{schema_type}_schema')

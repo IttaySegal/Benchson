@@ -1,5 +1,12 @@
-Add a new key-value pair: Insert a new key-value pair into an existing object.
-Rename a key: Change the name of an existing key without altering its value.
-Merge two objects: Combine the properties of two objects, with priority given to specified keys if conflicts arise.
-Split an object: Break down an object into multiple smaller objects based on specified criteria.
-Apply conditional updates: Modify keys or values based on a specified condition
+Insert key-value pair: Insert a new property into an object, ensuring the schema still validates.
+Rename key: Change an existing key name without touching its value, so the object remains schema-valid.
+Merge objects: Combine two objects’ properties, giving priority to one on conflicts (e.g. objA + objB ⇒ {…}, respecting both schemas).
+Split object: Break a large object into smaller ones based on criteria, each conforming to its subschema.
+Apply conditional update: Modify a value only when a condition is true, making sure you don’t violate any required/allowed fields.
+Convert boolean into string: Map true/false → "true"/"false", checking the schema allows type: "string".
+Convert string boolean into boolean: Parse "true"/"false" (or "1"/"0") → true/false, verifying type: "boolean".
+Convert number into boolean: Map 0→false, 1→true, ensuring type: "boolean".
+Convert boolean into number: Map true→1, false→0, ensuring type: "number".
+Switch multi-type representation: For a field with type: ["string","array"], convert a single-element array into its string value or split a string into an array, staying within the allowed types.
+Toggle conditional branch: Flip an object from its if branch to the other, migrating required/forbidden keys so it still validates against the new branch.
+Select a different oneOf alternative: If the schema uses oneOf, migrate keys so the object no longer matches the current alternative but does satisfy exactly one of the others.
