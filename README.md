@@ -37,10 +37,6 @@ Ideal for projects that require rigorous JSON handling, schema evolution testing
 
 ---
 
----
-
----
-
 ## Features
 
 | Category                | Details                                                                                                                                                                                                                  |
@@ -109,14 +105,38 @@ Follow these steps to get Benchson up and running locally.
    pip install -r requirements.txt
    ```
 
-4. **Configure environment variables**
-   Copy `.env.sample` to `.env` and add your LLM credentials:
+---
 
-   ```dotenv
-   WATSONX_API_ENDPOINT=...
-   WATSONX_PROJECT_ID=...
-   WATSONX_API_KEY=...
-   ```
+### Configuration
+
+The **`config/model.py`** file contains your LLM setup and generation parameters:
+
+```python
+# config/model.py
+model_name = "mistralai/mistral-large"
+model_parameters = {
+    "max_new_tokens": 500,
+    "decoding_method": "greedy",
+    "temperature": 0.9,
+    "repetition_penalty": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "random_seed": 42,
+    "stop_sequences": []
+}
+```
+
+* **`model_name`**: The LLM model identifier (e.g., an IBM Watsonx or other supported model).
+* **`model_parameters`**: Controls generation settings like token limits, sampling strategy, and randomness.
+
+Customize these values to switch models or fine-tune output quality for your use case.
+
+**LangChain Integration**
+
+Benchson leverages **LangChain** to manage prompt templates and orchestrate LLM calls:
+
+* **PromptTemplate & Chain**: Prompts are defined in `src/prompts.yaml` and loaded via LangChain's `PromptTemplate` for schema and instance tasks.
+* **LLM Integration**: The `LLM_json_generator.py` uses LangChain abstractions (`LLMChain`, `StrOutputParser`) to build and execute multi-step prompt chains against the configured LLM.
 
 ---
 
