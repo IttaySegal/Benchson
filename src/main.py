@@ -6,8 +6,8 @@ if __name__ == "__main__":
     base_folder = os.path.join(base_path, '..', 'data')
     os.makedirs(base_folder, exist_ok=True)
 
-    themes_file = os.path.join(os.path.dirname(__file__), '..', 'lists', 'themes.txt')
-    structures_file = os.path.join(os.path.dirname(__file__), '..', 'lists', 'structures.txt')
+    themes_file = os.path.join(base_path, '..', 'lists', 'themes.txt')
+    structures_file = os.path.join(base_path, '..', 'lists', 'structures.txt')
 
     with open(themes_file, 'r', encoding='utf-8') as f:
         themes = [line.strip() for line in f if line.strip()]

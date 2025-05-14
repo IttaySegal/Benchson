@@ -136,7 +136,7 @@ def generate_data(counter, theme, structure, modifications_path,base_folder, sch
             # Decide folder based on whether a real change occurred
             if is_equal:
                 target_folder = folders['no_changes']
-                print(f"⚠️ No change detected for {mod} saving in no-change folder.")
+                print(f"🟰 No change detected for {mod}, saving in no-change folder.")
             else:
                 target_folder = folders['data']
                 print(f"✅ Change detected for {mod} saving in instances folder.")

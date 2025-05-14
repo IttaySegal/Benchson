@@ -17,13 +17,15 @@ strict_json_schema:
     - Include additional constraints like minLength, maximum, enum, minItems, maxItems, required only when applicable and relevant to the theme.
     - Include arrays with a valid `items` definition and objects with nested properties when applicable.
     - Sets `additionalProperties: false` on all object definitions to restrict extra fields.
+    - Every `required` array must only include property names that are actually defined in the same object's `properties`.
+    - Do not include any empty strings (`""`) in `required` arrays.
+    - Do not include any keys in `required` lists that are undefined or blank.
     - Specifies the $schema field as http://json-schema.org/draft-07/schema#.
 
     Your response must follow these requirements:
     - Only the JSON Schema as a valid JSON string.
     - Do not include any explanations, comments, examples, or markdown formatting.
     Output:
-
 
 dynamic_json_schema:
   input_variables:
@@ -57,25 +59,26 @@ json_instance:
     - schema
     - number
   template: |
-    You are an assistant specialized in generating JSON data that conforms exactly to a given schema.
+    You are an assistant specialized in generating JSON data that conforms exactly to a given JSON Schema Draft-07 definition.
 
     You will receive two inputs:
-    1. `{schema}` — A complete JSON Schema definition. This schema defines the structure, types, and constraints of valid JSON instances.
-    2. `{number}` — The number of valid JSON instances you must generate.
+    1. `{schema}` — A full JSON Schema that describes the structure and constraints for valid instances.
+    2. `{number}` — The number of valid instances you must generate.
 
-    Your task is to generate exactly {number} unique JSON instances that strictly conform to the rules and constraints defined in the schema.
-    Each instance must satisfy all of the following requirements:
+    Carefully analyze the schema and determine its top-level `type`. Then:
+
+    - If the schema's top-level type is `object`: generate {number} valid JSON objects and return them in a JSON array (i.e., a list of object instances).
+    - If the schema's top-level type is `array`: generate a single JSON array with {number} valid elements **that match the `items` object schema inside**.
+    - Your output must always match the top-level type of the schema. Do not infer structure — follow the `type` exactly.
+
+    Requirements:
     - All required fields must be present.
-    - Field types must match those specified in the schema.
-    - Any constraints such as `minLength`, `maxLength`, `minimum`, `maximum`, `enum`, `pattern`, `format`, `minItems`, and `maxItems` must be respected.
+    - All constraints (`minLength`, `maximum`, `enum`, `required`, etc.) must be satisfied.
+    - The values must be realistic and human-readable (e.g., names, titles, prices).
+    - Do NOT add any explanation or description.
+    - Output only the pure JSON — no code blocks, no text, no formatting, no markdown.
 
-    Your response must follow these requirements:
-    - You must output exactly {number} valid JSON instances and wrap the instances in a single JSON array
-    - Each instance must be a valid JSON string.
-    - Do not include any explanations, comments, or markdown formatting.
-    - Do not include any descriptive text — only the raw JSON instances.
     Output:
-
 
 input_instruction:
   input_variables:

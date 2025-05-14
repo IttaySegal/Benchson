@@ -99,7 +99,7 @@ def compare_json_object(eval_data, diffs_folder=None, instance_id=None):
     if data is None or ground_truth is None:
         raise ValueError("Missing 'data' or 'ground_truth' in eval_data.")
 
-    diff = DeepDiff(data, ground_truth, True)  #True means ignore the sequence order
+    diff = DeepDiff(data, ground_truth, False)  #TODO: check if order in lists matters in this project
 
     if not diff:
         return True
