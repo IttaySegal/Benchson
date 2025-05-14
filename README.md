@@ -4,7 +4,7 @@
 
 # Benchson
 
-**Benchson** is a toolkit for **automatically generating**, **modifying**, and **evaluating** JSON Schemas and JSON instances using a large language model (IBM Watsonx LLM). It supports both **strict** and **dynamic** schema generation, instance creation, schema-valid modifications, and comprehensive diff reporting.
+**Benchson** is a toolkit for **automatically generating** and **modifying** JSON Schemas and JSON instances using a large language model (IBM Watsonx LLM). It supports both **strict** and **dynamic** schema generation, instance creation, schema-valid modifications, and comprehensive diff reporting.
 
 ---
 
@@ -31,7 +31,7 @@ Benchson streamlines JSON data management by offering an end-to-end solution for
 * Generating **valid JSON Schemas** (strict & dynamic).
 * Producing **JSON instances** conforming to those schemas.
 * Applying **schema-valid modifications** to JSON data.
-* **Validating**, **diffing**, and **reporting** changes automatically.
+* diffing and **reporting** changes automatically.
 
 Ideal for projects that require rigorous JSON handling, schema evolution testing, and automation of data integrity workflows.
 
@@ -79,7 +79,7 @@ Follow these steps to get Benchson up and running locally.
 
 ### Prerequisites
 
-* Python 3.8+
+* Python 3.12
 * `pip` package manager
 * IBM Watsonx LLM credentials (or another supported LLM endpoint)
 
@@ -88,16 +88,56 @@ Follow these steps to get Benchson up and running locally.
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/your-org/benchson.git
+   git clone https://github.com/IttaySegal/benchson.git
    cd benchson
    ```
 
 2. **Create & activate a virtual environment**
-
+   <details>
+   <summary> Linux / macOS (bash, zsh)</summary>
+   
    ```bash
    python3 -m venv .venv
    source .venv/bin/activate
    ```
+   </details>
+
+   <details>
+   <summary> Windows PowerShell</summary>
+   
+   ```bash
+     python -m venv .venv
+     .\.venv\Scripts\Activate.ps1
+   ```
+   </details>
+
+   <details>
+   <summary> Windows CMD</summary>
+   
+   ```bash
+     python -m venv .venv
+     .\.venv\Scripts\activate.bat
+   ```
+   </details>
+
+   <details>
+   <summary>Activate the virtual‑env without typing commands</summary>
+
+   ### VS Code
+
+   1. Open the project folder in VS Code.  
+   2. Press <kbd>Ctrl + Shift + P</kbd> (⇧⌘P on macOS) and run **Python: Select Interpreter**.  
+   3. Choose the interpreter that lives inside **.venv**.  
+      >    VS Code now launches every integrated terminal with the venv active and runs the correct Python for debugging and tasks.
+   ### PyCharm / IntelliJ IDEA
+
+   1. Go to **File → Settings → Project → Python Interpreter**.  
+   2. Click the ⚙️ gear → **Add Interpreter → Existing VirtualEnv**, then browse to `./.venv`.  
+   3. Click **OK**. 
+   >    All run‑configurations and the built‑in terminal will use that environment automatically.  
+   
+   </details>
+
 
 3. **Install dependencies**
 
