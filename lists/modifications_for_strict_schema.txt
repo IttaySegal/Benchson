@@ -7,7 +7,7 @@ Modify dictionary value: Change the contents of an existing key where the value 
 Modify array value: Change the contents of an existing key where the value is an array (list).
 Add a new value to an existing array: Append a new element to an existing array.
 Remove a value from an existing array: Delete a specified element from an existing array.
-Update numeric value by increment or decrement: Change an integer or float value by adding or subtracting a specific amount, staying within allowed limits.
+Update a numeric value by increment or decrement: Change an integer or float value by adding or subtracting a specific amount, staying within allowed limits.
 Concatenate string values: Append or prepend additional text to an existing string without altering its type or purpose.
 Capitalize or format string values: Modify the format of a string, such as changing case uppercase/lowercase.
 Sort array elements: Arrange elements within an array in a specific order, such as alphabetical, numerical, or custom-defined.

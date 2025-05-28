@@ -4,9 +4,9 @@
 
 # Benchson
 
-**Benchson** is a toolkit for **automatically generating** and **modifying** JSON Schemas and JSON instances using a large language model (IBM Watsonx LLM). It supports both **strict** and **dynamic** schema generation, instance creation, schema-valid modifications, and comprehensive diff reporting.
+**Benchson** is a toolkit for **automatically generating** and **modifying** JSON Schemas and JSON instances using a large language model (IBM Watsonx LLM). It supports both **strict** and **dynamic** schema generation, instance creation, schema-valid modifications, and comprehensive diff reporting.  
+**The core goal of this project is to generate a dataset of tasks designed for large language models (LLMs), focusing on the creation and modification of JSON data.** The dataset includes diverse prompts and structured examples to train or evaluate LLMs in understanding, generating, and editing JSON documents based on natural language instructions.
 
----
 
 ## Table of Contents
 
@@ -33,7 +33,8 @@ Benchson streamlines JSON data management by offering an end-to-end solution for
 * Applying **schema-valid modifications** to JSON data.
 * diffing and **reporting** changes automatically.
 
-Ideal for projects that require rigorous JSON handling, schema evolution testing, and automation of data integrity workflows.
+Ideal for projects focused on training or evaluating LLMs in structured data tasks, including robust JSON generation, validation, and controlled schema-driven modifications.
+
 
 ---
 
@@ -251,6 +252,14 @@ Within each schema-type folder:
 7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
 8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
 
+---
+
+## Authors
+
+This project was developed as part of an IBM Starship internship at the **Cloud Center of Excellence (CCOE)** lab in **Beer Sheva**.
+
+- **Meshi Levi** – [@MeshiLevi](https://github.com/MeshiLevi)
+- **Itay Segal** – [@IttaySegal](https://github.com/IttaySegal)
 ---
 
 ## License
