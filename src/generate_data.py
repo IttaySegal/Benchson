@@ -6,23 +6,44 @@ from LLM_json_generator import LLMJsonGenerator
 from json_comparator import compare_json_object
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 
+# 🧩 Mapping of modifications to their inverse setup injections
+pre_mod_injection_map = {
+    # 1. Remove Duplicates → Add Duplicates first
+    "Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.": [
+        "Add duplicate elements to an array: Insert one or more values that are already present in the array to create duplicates."
+    ],
+
+    # 2. Capitalization → First distort casing
+    "Capitalize or format string values: Modify the format of a string, such as changing case uppercase/lowercase.": [
+        "De-capitalize or randomly change case of string values: Make strings lowercase or mix cAsE to simulate formatting issues."
+    ],
+
+    # 3. Sort → Add elements to break order, then reverse
+    "Sort array elements: Arrange elements within an array in a specific order, such as alphabetical, numerical, or custom-defined.": [
+        "Append new elements to an array: Insert new random values at the end of one or more arrays.",
+        "Reverse array elements: Flip the order of items in one or more arrays to make them reversed."
+    ],
+
+    # 4. Reverse → Add elements to break order, then sort
+    "Reverse array elements: Rearrange elements in an array so that their order is flipped from end to start.": [
+        "Append new elements to an array: Insert new random values at the end of one or more arrays.",
+        "Sort array elements: Arrange the array elements in a clear ascending or alphabetical order."
+    ]
+}
+
+
 
 def generate_data(counter, theme, structure, modifications_path, base_folder, schema_type):
     generator = LLMJsonGenerator()
     print(theme, structure)
 
-    # Read modification types from file
     modifications = read_modifications(modifications_path)
-
-    # Output folders
     folders = setup_output_folders(base_folder)
 
-    # Generate JSON schema
     json_schema = generate_json_schema(generator, theme, structure, schema_type, folders['schemas'])
     if json_schema is None:
         return counter
 
-    # Loop over modifications
     for mod in modifications:
         counter = process_modification(generator, json_schema, mod, folders, counter)
 
@@ -58,7 +79,6 @@ def generate_json_schema(generator, theme, structure, schema_type, schema_folder
 
     print("✅ JSON Schema generated.")
 
-    # Save schema file
     name = re.split(r'[^a-zA-Z0-9]', structure.strip())[0]
     schema_file_name = f"schema_{theme}_{name}.json"
     schema_file_path = os.path.join(schema_folder, schema_file_name)
@@ -68,8 +88,29 @@ def generate_json_schema(generator, theme, structure, schema_type, schema_folder
     return json_schema
 
 
+def generate_instruction(generator, schema, original_json, modification_type):
+    return generator.prompt_generator(StrOutputParser, {
+        "name": "input_instruction",
+        "input_variables": {
+            "schema": schema,
+            "original_json": original_json,
+            "modification_type": modification_type
+        }
+    })
+
+
+def apply_modification(generator, schema, json_instance, instruction):
+    return generator.prompt_generator(JsonOutputParser, {
+        "name": "modify_json",
+        "input_variables": {
+            "schema": schema,
+            "json_instance": json_instance,
+            "instruction": instruction
+        }
+    })
+
+
 def process_modification(generator, json_schema, mod, folders, counter):
-    # Generate original JSON
     json_instances = generator.prompt_generator(JsonOutputParser, {
         "name": "json_instance",
         "input_variables": {
@@ -87,51 +128,18 @@ def process_modification(generator, json_schema, mod, folders, counter):
             counter += 1
             continue
 
-        '''
-            Special case for “Remove duplicate elements…”:
-            Since the original JSON instance may not actually contain any duplicates to remove,
-            we first inject duplicates by applying an “Add duplicate elements to an array” modification.
-            That gives us a new JSON (with guaranteed duplicates), which we then feed into the normal
-            “Remove duplicate elements” instruction below.
-        '''
-        if mod == "Remove duplicate elements from an array: Identify and eliminate repeated elements within an array to ensure uniqueness.":
-            instruction = generator.prompt_generator(StrOutputParser, {
-                "name": "input_instruction",
-                "input_variables": {
-                    "schema": json_schema,
-                    "original_json": origin_json,
-                    "modification_type": "Add duplicate elements to an array: Insert one or more values that are already present in the array to create duplicates."
-                }
-            })
-            origin_json = generator.prompt_generator(JsonOutputParser, {
-                "name": "modify_json",
-                "input_variables": {
-                    "schema": json_schema,
-                    "json_instance": origin_json,
-                    "instruction": instruction
-                }
-            })
+        # Apply precondition injection if defined
+        if mod in pre_mod_injection_map:
+            pre_mod_type = pre_mod_injection_map[mod]
+            print(f"🔁 Pre-injection for '{mod}' using inverse instruction: '{pre_mod_type}'")
 
-        # Generate the actual instruction for the requested modification (including the cleaned-up
-        # “Remove duplicate elements…” case above) and apply it
-        instruction = generator.prompt_generator(StrOutputParser, {
-            "name": "input_instruction",
-            "input_variables": {
-                "schema": json_schema,
-                "original_json": origin_json,
-                "modification_type": mod
-            }
-        })
-        modified_json = generator.prompt_generator(JsonOutputParser, {
-            "name": "modify_json",
-            "input_variables": {
-                "schema": json_schema,
-                "json_instance": origin_json,
-                "instruction": instruction
-            }
-        })
+            instruction = generate_instruction(generator, json_schema, origin_json, pre_mod_type)
+            origin_json = apply_modification(generator, json_schema, origin_json, instruction)
 
-        # Validate modified JSON
+        # Generate instruction for requested modification
+        instruction = generate_instruction(generator, json_schema, origin_json, mod)
+        modified_json = apply_modification(generator, json_schema, origin_json, instruction)
+
         if not json_validator(modified_json, json_schema):
             print(f"❌ Modified JSON is INVALID against schema for modification: {mod}")
             save_error_case(counter, {
@@ -142,7 +150,6 @@ def process_modification(generator, json_schema, mod, folders, counter):
             counter += 1
             continue
 
-        # Create the JSON structure for evaluation
         eval_data = {
             "data": origin_json,
             "instructions": instruction,
@@ -156,11 +163,13 @@ def process_modification(generator, json_schema, mod, folders, counter):
             })
         }
 
-        # Compare using eval_data
-        is_equal = compare_json_object(eval_data, diffs_folder=folders['diffs'], instance_id=str(counter), modification_type=mod)
+        is_equal = compare_json_object(
+            eval_data,
+            diffs_folder=folders['diffs'],
+            instance_id=str(counter),
+            modification_type=mod
+        )
 
-
-        # Decide folder based on whether a real change occurred
         if is_equal:
             target_folder = folders['no_changes']
             print(f"🟰 No change detected for {mod} saving in no-change folder.")
@@ -168,7 +177,6 @@ def process_modification(generator, json_schema, mod, folders, counter):
             target_folder = folders['data']
             print(f"✅ Change detected for {mod} saving in instances folder.")
 
-        # Write the evaluation data to a JSON file
         file_name = f"instance_{counter}.json"
         file_path = os.path.join(target_folder, file_name)
         with open(file_path, 'w', encoding='utf-8') as out_file:
@@ -180,9 +188,6 @@ def process_modification(generator, json_schema, mod, folders, counter):
 
 
 def save_error_case(counter, error_data, json_schema, modification_type, error_folder, error_type="error"):
-    """
-    Save error JSONs separately for analysis.
-    """
     error_filename = f"error_{error_type}_{counter}.json"
     error_path = os.path.join(error_folder, error_filename)
 
