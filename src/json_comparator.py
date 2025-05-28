@@ -17,9 +17,9 @@ def classify_diff(data, ground_truth, modification_type=None):
     Returns:
         tuple[str, DeepDiff]: Classification label and the raw diff object.
     """
-    order_sensitive = "order" # currently only "order" is relevant
+    order_sensitive = ["order","duplicate"] # currently only "order" is relevant
 
-    ignore_order = False if order_sensitive in modification_type else True
+    ignore_order = not any(keyword.lower() in modification_type.lower() for keyword in order_sensitive)
 
     diff = DeepDiff(data, ground_truth, ignore_order=ignore_order)
 
