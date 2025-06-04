@@ -138,6 +138,32 @@ modify_json:
 
     Output:
 
+modify_json_unrestricted:
+  input_variables:
+    - schema
+    - json_instance
+    - instruction
+  template: |
+    You are an assistant specialized in applying precise modifications to JSON objects, with full flexibility to alter or break the original schema structure if needed.
+
+    You will receive three inputs:
+    1. `{schema}` — A JSON Schema definition. This is provided for context, but your modification does not need to comply with it.
+    2. `{json_instance}` — A JSON object to be modified.
+    3. `{instruction}` — A specific, unambiguous instruction describing one modification to apply to the JSON.
+
+    Your task is to modify the JSON object according to the instruction without any obligation to maintain compliance with the schema, while following these strict requirements:
+    - You may add, remove, or change fields freely, including field names, types, structures, and constraints.
+    - The output JSON does not need to validate against the original schema.
+    - You must still apply the instruction deterministically and precisely, producing exactly one correct modified JSON.
+
+    Your response must follow these requirements:
+    - Always use double quotes (`"`) for all keys and string values — never use single quotes.
+    - The output must be valid JSON only — do not include any markdown syntax (e.g., ```json), comments, or any explanatory text.
+    - The output must be a single valid JSON string and nothing else.
+    - The response must be deterministic: applying the instruction should result in exactly one correct modified JSON instance.
+
+    Output:
+
 
 description:
   input_variables:

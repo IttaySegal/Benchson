@@ -93,16 +93,26 @@ def generate_instruction(generator, schema, original_json, modification_type):
         })
 
 
-def apply_modification(generator, schema, json_instance, instruction):
+def apply_modification(generator, flexible, schema, json_instance, instruction):
     """Apply a single modification instruction to a JSON instance."""
-    return generator.prompt_generator(JsonOutputParser, {
-        "name": "modify_json",
-        "input_variables": {
-            "schema": schema,
-            "json_instance": json_instance,
-            "instruction": instruction
-        }
-    })
+    if flexible:
+        return generator.prompt_generator(JsonOutputParser, {
+            "name": "modify_json_unrestricted",
+            "input_variables": {
+                "schema": schema,
+                "json_instance": json_instance,
+                "instruction": instruction
+            }
+        })
+    else:
+        return generator.prompt_generator(JsonOutputParser, {
+            "name": "modify_json",
+            "input_variables": {
+                "schema": schema,
+                "json_instance": json_instance,
+                "instruction": instruction
+            }
+        })
 
 def save_eval_data(eval_data, counter, modification, folders):
     """Save evaluation data to the appropriate folder based on diff result."""
@@ -125,11 +135,7 @@ def save_eval_data(eval_data, counter, modification, folders):
     with open(file_path, 'w', encoding='utf-8') as out_file:
         json.dump(eval_data, out_file, indent=2)
 
-    fname = f"instance_{counter}.json"
-    path = os.path.join(target_folder, fname)
-    with open(path, 'w', encoding='utf-8') as f:
-        json.dump(eval_data, f, indent=2)
-    return path
+    return file_path
 
 def save_error_case(counter, error_data, json_schema, modification_type, error_folder, error_type="error"):
     """Save an error case JSON to the error folder."""
@@ -148,7 +154,7 @@ def save_error_case(counter, error_data, json_schema, modification_type, error_f
 
     print(f"Saved error case: {error_path}")
 
-def process_modification(generator, origin_json, json_schema, modification, folders, counter):
+def process_modification(generator, flexible, origin_json, json_schema, modification, folders, counter):
     """Validate, modify, and save one JSON instance with a given modification."""
     if not json_validator(origin_json, json_schema):
         print(f"Original JSON not valid against schema for modification: {modification}")
@@ -160,13 +166,14 @@ def process_modification(generator, origin_json, json_schema, modification, fold
     if modification in pre_mod_injection_map:
         pre_mod_type = pre_mod_injection_map[modification]
         instruction = generate_instruction(generator, json_schema, origin_json, pre_mod_type)
-        origin_json = apply_modification(generator, json_schema, origin_json, instruction)
+        origin_json = apply_modification(generator, flexible, json_schema, origin_json, instruction)
 
     # Generate instruction for requested modification
     instruction = generate_instruction(generator, json_schema, origin_json, modification)
-    modified_json = apply_modification(generator, json_schema, origin_json, instruction)
+    modified_json = apply_modification(generator, flexible, json_schema, origin_json, instruction)
 
-    if not json_validator(modified_json, json_schema):
+
+    if not flexible and not json_validator(modified_json, json_schema):
         print(f"Modified JSON is INVALID against schema for modification: {modification}")
         save_error_case(counter, {
             "origin_json": origin_json,
@@ -207,6 +214,7 @@ def generate_data(counter, theme, structure, modifications_path, base_folder, sc
     for mod in modifications:
         instances = generate_instances(generator, schema, count=2)
         for origin_json in instances:
-            counter = process_modification(generator, origin_json, schema, mod, folders, counter)
+            for flexible in [False, True]:
+                counter = process_modification(generator, flexible, origin_json, schema, mod, folders, counter)
 
     return counter
