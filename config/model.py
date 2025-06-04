@@ -1,4 +1,4 @@
-model_name =  "mistralai/mistral-large" #"ibm/granite-3-2-8b-instruct"
+model_name =  "mistralai/mistral-large"
 model_parameters = {
         "max_new_tokens": 500,
         "decoding_method": "greedy",

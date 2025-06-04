@@ -3,30 +3,42 @@ import os
 import re
 from deepdiff import DeepDiff
 
-def classify_diff(diff):
+from deepdiff import DeepDiff
+
+def classify_diff(data, ground_truth, modification_type=None):
     """
-    Classify the type of difference found in a JSON comparison.
+    Run DeepDiff on the input data with conditional order sensitivity based on a modification type.
 
     Args:
-        diff (DeepDiff): The DeepDiff output.
+        data (dict): Original JSON data.
+        ground_truth (dict): Modified JSON data.
+        modification_type (str): Description of the modification applied.
 
     Returns:
-        str: A string representing the classification of the difference.
+        tuple[str, DeepDiff]: Classification label and the raw diff object.
     """
+    order_sensitive = ["order","duplicate"] # currently only "order" is relevant
+
+    ignore_order = not any(keyword.lower() in modification_type.lower() for keyword in order_sensitive)
+
+    diff = DeepDiff(data, ground_truth, ignore_order=ignore_order)
+
     if not diff:
-        return "No difference"
+        return "No difference", diff
 
     if 'dictionary_item_added' in diff or 'dictionary_item_removed' in diff:
-        return "Structural change (keys added/removed)"
+        return "Structural change (keys added/removed)", diff
     if 'type_changes' in diff:
-        return "Data type change"
+        return "Data type change", diff
     if 'values_changed' in diff:
-        return "Value change"
+        return "Value change", diff
     if 'iterable_item_added' in diff or 'iterable_item_removed' in diff:
-        return "Array structure change"
+        return "Array structure change", diff
     if 'set_item_added' in diff or 'set_item_removed' in diff:
-        return "Set structure change"
-    return "Unclassified difference"
+        return "Set structure change", diff
+
+    return "Unclassified difference", diff
+
 
 
 def clean_deepdiff_paths(diff_dict):
@@ -68,7 +80,7 @@ def clean_deepdiff_paths(diff_dict):
                 cleaned_changes.append(f"{path.strip()} type changed from {old_type} to {new_type}")
 
         else:
-            # For adds/removes: simple list of paths
+            # For adds/removes: a simple list of paths
             for path in changes:
                 if path.startswith("root"):
                     path = path[len("root"):]
@@ -80,39 +92,25 @@ def clean_deepdiff_paths(diff_dict):
     return cleaned_diff
 
 
-def compare_json_object(eval_data, diffs_folder=None, instance_id=None):
-    """
-    Compare 'data' and 'ground_truth' from an eval_data object.
-    If differences are found, write them to a corresponding diff_output_X.txt file.
-
-    Args:
-        eval_data (dict): The JSON evaluation data containing 'data' and 'ground_truth'.
-        diffs_folder (str or None): Directory to save diffs if needed.
-        instance_id (str or None): Optional ID to name output files uniquely.
-
-    Returns:
-        bool: True if the data matches ground_truth, False otherwise.
-    """
+def compare_json_object(eval_data, diffs_folder=None, instance_id=None, modification_type=None):
     data = eval_data.get("data")
     ground_truth = eval_data.get("ground_truth")
 
     if data is None or ground_truth is None:
         raise ValueError("Missing 'data' or 'ground_truth' in eval_data.")
 
-    diff = DeepDiff(data, ground_truth, True)  #True means ignore the sequence order
+    classification, diff = classify_diff(data, ground_truth, modification_type)
 
     if not diff:
         return True
 
-    diff_classification = classify_diff(diff)
-
     output_path = os.path.join(diffs_folder, f"diff_output_{instance_id}.txt")
-
     with open(output_path, 'w', encoding='utf-8') as out:
-        out.write(f"Diff classification: {diff_classification}\n\n")
+        out.write(f"Diff classification: {classification}\n\n")
         diff_dict = json.loads(diff.to_json())
         cleaned_diff = clean_deepdiff_paths(diff_dict)
         out.write(json.dumps(cleaned_diff, indent=2, ensure_ascii=False))
 
     return False
+
 
