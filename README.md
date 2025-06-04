@@ -256,7 +256,7 @@ Within each schema-type folder:
 
 ## Authors
 
-This project was developed as part of an IBM Starship internship at the **Cyber Security of Excellence (CSOE)** lab in **Beer Sheva**.
+This project was developed as part of an IBM Starship internship at the **Cyber Security Center of Excellence (CCoE)** lab in **Beer Sheva**.
 
 - **Meshi Levi** – [@MeshiLevi](https://github.com/MeshiLevi)
 - **Itay Segal** – [@IttaySegal](https://github.com/IttaySegal)
