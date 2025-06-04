@@ -31,24 +31,16 @@ pre_mod_injection_map = {
     ]
 }
 
-
-
-def read_modifications(modifications_path):
-    """Read non-empty modification lines from a file."""
-    with open(modifications_path, 'r', encoding='utf-8') as f:
-        return [line.strip() for line in f if line.strip()]
-
-
 def setup_output_folders(base_folder):
     """Create and return required output subfolders."""
-    names = ['data', 'errors', 'no_changes', 'schemas', 'diffs']
+    names = ['data_schema_compliant', 'data' , 'errors', 'no_changes', 'instances_and_schemas', 'diffs']
     folders = {n: os.path.join(base_folder, n) for n in names}
     for path in folders.values():
         os.makedirs(path, exist_ok=True)
     return folders
 
 
-def generate_json_schema(generator, theme, structure, schema_type, schema_folder):
+def generate_json_schema(generator, theme, structure, schema_type):
     """Generate, validate, and save a JSON schema."""
     json_schema = generator.prompt_generator(JsonOutputParser, {
         "name": f"{schema_type}_json_schema",
@@ -64,33 +56,53 @@ def generate_json_schema(generator, theme, structure, schema_type, schema_folder
         return None
 
     print("JSON Schema generated.")
+    return json_schema
+
+def save_schema_with_instances(schema, instances, theme, structure, output_folder):
+    """Save a JSON schema along with its generated instances into a single file."""
+    combined_data = {
+        "schema": schema,
+        "instances": instances
+    }
 
     name = re.split(r'[^a-zA-Z0-9]', structure.strip())[0]
-    schema_file_name = f"schema_{theme}_{name}.json"
-    schema_file_path = os.path.join(schema_folder, schema_file_name)
-    with open(schema_file_path, 'w', encoding='utf-8') as out_file:
-        json.dump(json_schema, out_file, indent=2)
+    combined_filename = f"data_with_schema_{theme}_{name}.json"
+    combined_path = os.path.join(output_folder, combined_filename)
 
-    print(f"JSON Schema generated and saved to {schema_file_path}")
-    return json_schema
+    with open(combined_path, 'w', encoding='utf-8') as out_file:
+        json.dump(combined_data, out_file, indent=2)
+
+    print(f"Saved combined schema and instances to {combined_path}")
 
 def generate_instances(generator, schema, count=2):
     """Generate `count` JSON instances that match a schema."""
-    return generator.prompt_generator(JsonOutputParser, {
+    instances = generator.prompt_generator(JsonOutputParser, {
         "name": "json_instance",
         "input_variables": {"schema": schema, "number": count}
     })
+    return [inst for inst in instances if json_validator(inst, schema)]
 
-def generate_instruction(generator, schema, original_json, modification_type):
+
+def generate_instruction(generator, flexible, schema, original_json, modification_type):
     """Generate a single natural-language instruction for a JSON modification."""
-    return generator.prompt_generator(StrOutputParser, {
-            "name": "input_instruction",
-            "input_variables": {
-                "schema": schema,
-                "original_json": original_json,
-                "modification_type": modification_type
-            }
-        })
+    if flexible:
+        return generator.prompt_generator(StrOutputParser, {
+                "name": "input_instruction",
+                "input_variables": {
+                    "schema": schema,
+                    "original_json": original_json,
+                    "modification_type": modification_type
+                }
+            })
+    else:
+        return generator.prompt_generator(StrOutputParser, {
+                "name": "input_instruction_with_schema",
+                "input_variables": {
+                    "schema": schema,
+                    "original_json": original_json,
+                    "modification_type": modification_type
+                }
+            })
 
 
 def apply_modification(generator, flexible, schema, json_instance, instruction):
@@ -114,7 +126,7 @@ def apply_modification(generator, flexible, schema, json_instance, instruction):
             }
         })
 
-def save_eval_data(eval_data, counter, modification, folders):
+def save_eval_data(eval_data, flexible, counter, modification, folders):
     """Save evaluation data to the appropriate folder based on diff result."""
     is_equal = compare_json_object(
         eval_data,
@@ -127,7 +139,7 @@ def save_eval_data(eval_data, counter, modification, folders):
         target_folder = folders['no_changes']
         print(f"No change detected for {modification} saving in no-change folder.")
     else:
-        target_folder = folders['data']
+        target_folder = folders['data'] if flexible else folders['data_schema_compliant']
         print(f"Change detected for {modification} saving in instances folder.")
 
     file_name = f"instance_{counter}.json"
@@ -156,20 +168,14 @@ def save_error_case(counter, error_data, json_schema, modification_type, error_f
 
 def process_modification(generator, flexible, origin_json, json_schema, modification, folders, counter):
     """Validate, modify, and save one JSON instance with a given modification."""
-    if not json_validator(origin_json, json_schema):
-        print(f"Original JSON not valid against schema for modification: {modification}")
-        save_error_case(counter, {"origin_json": origin_json},
-                        json_schema, modification, folders['errors'], error_type="origin_invalid")
-        return counter + 1
-
     # Apply precondition injection if defined
     if modification in pre_mod_injection_map:
         pre_mod_type = pre_mod_injection_map[modification]
-        instruction = generate_instruction(generator, json_schema, origin_json, pre_mod_type)
+        instruction = generate_instruction(generator, flexible, json_schema, origin_json, pre_mod_type)
         origin_json = apply_modification(generator, flexible, json_schema, origin_json, instruction)
 
     # Generate instruction for requested modification
-    instruction = generate_instruction(generator, json_schema, origin_json, modification)
+    instruction = generate_instruction(generator, flexible, json_schema, origin_json, modification)
     modified_json = apply_modification(generator, flexible, json_schema, origin_json, instruction)
 
 
@@ -194,27 +200,28 @@ def process_modification(generator, flexible, origin_json, json_schema, modifica
             }
         })
     }
-    path = save_eval_data(eval_data, counter, modification, folders)
+    path = save_eval_data(eval_data, flexible, counter, modification, folders)
     print(f"Generated valid data and saved to: {path}")
 
     return counter + 1
 
-def generate_data(counter, theme, structure, modifications_path, base_folder, schema_type):
+def generate_data(counter, theme, structure, modifications, base_folder, schema_type):
     """Generate schemas, instances, and modified data for one theme-structure pair."""
     generator = LLMJsonGenerator()
     print(theme, structure)
 
-    modifications = read_modifications(modifications_path)
     folders = setup_output_folders(base_folder)
 
-    schema = generate_json_schema(generator, theme, structure, schema_type, folders['schemas'])
+    schema = generate_json_schema(generator, theme, structure, schema_type)
     if schema is None:
         return counter
 
-    for mod in modifications:
-        instances = generate_instances(generator, schema, count=2)
-        for origin_json in instances:
-            for flexible in [False, True]:
-                counter = process_modification(generator, flexible, origin_json, schema, mod, folders, counter)
+    valid_instances = generate_instances(generator, schema, count=2)
+    save_schema_with_instances(schema, valid_instances, theme, structure, folders['instances_and_schemas'])
+
+    for flexible in [False, True]:
+        for mod in modifications:
+            for origin_json in valid_instances:
+                    counter = process_modification(generator, flexible, origin_json, schema, mod, folders, counter)
 
     return counter

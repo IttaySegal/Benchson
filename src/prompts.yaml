@@ -98,8 +98,40 @@ input_instruction:
     The instruction must follow these requirements:
     - The instruction must be specific enough so that applying it would produce exactly one modified version of the JSON object.
     - The instruction must describe exactly one change that can be directly and immediately applied to the original JSON object.
+    - The instruction must make sense in the context of the original JSON structure and content.
+
+    Your response must follow these requirements:
+    - Do not include any quotation marks, markdown formatting, or explanatory text.
+    - Do not reference or mention the original JSON explicitly (e.g., do not say 'in the JSON above').
+    - The instruction must describe a single, atomic change — no multi-step instructions.
+
+    Your goal is to produce a single instruction that could immediately be executed by an assistant to apply one precise change to the JSON.
+
+    Output:
+
+input_instruction_with_schema:
+  input_variables:
+    - schema
+    - original_json
+    - modification_type
+  template: |
+    You are an assistant specialized in generating precise and executable user instructions for modifying JSON objects.
+
+    You will receive three inputs:
+    1. `{schema}` — A complete JSON Schema definition, specifying the valid structure, types, required fields, and constraints for the JSON object.
+    2. `{original_json}` — The original JSON object before any modification. This is provided for context only; you must not reference or mention it in your output.
+    3. `{modification_type}` — A description of the type of modification the user wants to make (e.g., change a value, remove a key, append to an array).
+
+    Your task is to generate a single, clear, natural-language instruction that a user might say to request the specified modification.
+
+    The instruction must follow these requirements:
+    - The instruction must be specific enough so that applying it would produce exactly one modified version of the JSON object.
+    - The instruction must describe exactly one change that can be directly and immediately applied to the original JSON object.
     - The change must be fully legal and valid according to the provided JSON Schema (respect field types, allowed values, required fields, and constraints).
     - The instruction must make sense in the context of the original JSON structure and content.
+    
+    Your response must follow this exact format:
+    {{instruction}}. The change must continue to comply with the following schema: {{schema}}
 
     Your response must follow these requirements:
     - Do not include any quotation marks, markdown formatting, or explanatory text.
@@ -109,7 +141,6 @@ input_instruction:
     Your goal is to produce a single instruction that could immediately be executed by an assistant to apply one precise and schema-valid change to the JSON.
 
     Output:
-
 
 modify_json:
   input_variables:

@@ -17,13 +17,16 @@ if __name__ == "__main__":
 
     schema_types = ["strict", "dynamic"]
 
-    for  schema_type in schema_types:
+    for schema_type in schema_types:
         folder = os.path.join(base_folder, f'data_{schema_type}_schema')
         os.makedirs(folder, exist_ok=True)
-        modifications_dynamic_schema_path = os.path.join(base_path, '..', 'lists', f'modifications_for_{schema_type}_schema.txt')
+
+        modifications_path = os.path.join(base_path, '..', 'lists', f'modifications_for_{schema_type}_schema.txt')
+        with open(modifications_path, 'r', encoding='utf-8') as f:
+            modifications =  [line.strip() for line in f if line.strip()]
 
         counter = 0
         for theme in themes:
             for structure in structures:
-                c = generate_data(counter, theme, structure, modifications_dynamic_schema_path, folder, schema_type)
+                c = generate_data(counter, theme, structure, modifications, folder, schema_type)
                 counter += c
