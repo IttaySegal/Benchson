@@ -128,13 +128,18 @@ def apply_modification(generator, flexible, schema, json_instance, instruction):
 
 def save_eval_data(eval_data, flexible, counter, modification, folders):
     """Save evaluation data to the appropriate folder based on diff result."""
+    if "strict" in folders['data']:
+        schema_type = "strict"
+    elif "dynamic" in folders['data']:
+        schema_type = "dynamic"
+    else:
+        schema_type = "unknown"
     is_equal = compare_json_object(
         eval_data,
         diffs_folder=folders['diffs'],
         instance_id=str(counter),
         modification_type=modification
     )
-
     if is_equal:
         target_folder = folders['no_changes']
         print(f"No change detected for {modification} saving in no-change folder.")
@@ -142,7 +147,7 @@ def save_eval_data(eval_data, flexible, counter, modification, folders):
         target_folder = folders['data'] if flexible else folders['data_schema_compliant']
         print(f"Change detected for {modification} saving in instances folder.")
 
-    file_name = f"instance_{counter}.json"
+    file_name = f"instance_{schema_type}_{counter}.json"
     file_path = os.path.join(target_folder, file_name)
     with open(file_path, 'w', encoding='utf-8') as out_file:
         json.dump(eval_data, out_file, indent=2)
