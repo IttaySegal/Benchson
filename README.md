@@ -196,26 +196,29 @@ Benchson writes outputs under the `data/` directory with separate folders for ea
 ```
 data/
 ├── data_strict_schema/
-│   ├── data/
-│   ├── errors/
-│   ├── no_changes/
-│   ├── schemas/
-│   └── diffs/
-└── data_dynamic_schema/
-    ├── data/
-    ├── errors/
-    ├── no_changes/
-    ├── schemas/
-    └── diffs/
+│ ├── data/
+│ ├── data_schema_compliant/
+│ ├── errors/
+│ ├── no_changes/
+│ ├── diffs/
+│ └── instances_and_schemas/
+├── data_dynamic_schema/
+│ ├── data/
+│ ├── data_schema_compliant/
+│ ├── errors/
+│ ├── no_changes/
+│ ├── diffs/
+│ └── instances_and_schemas/
 ```
 
-Within each schema-type folder:
+### Folder Descriptions
 
-* `data/` — successful modifications with real changes
-* `errors/` — validation failures
-* `no_changes/` — operations that resulted in no diff
-* `schemas/` — generated schema files
-* `diffs/` — human-readable change reports
+- **`data/`** – Modified instances that remain valid under their schema.
+- **`data_schema_compliant/`** – Modified instances that may not fully conform to the original schema but still represent a successful change.
+- **`errors/`** – Cases where validation failed or the schema could not be applied correctly.
+- **`no_changes/`** – Instances that received a modification instruction but resulted in no observable change.
+- **`diffs/`** – Human-readable comparison files showing the differences between the original and modified JSON.
+- **`instances_and_schemas/`** – Combined records of each JSON instance and the schema it was generated from.
 
 ---
 
@@ -256,7 +259,7 @@ Within each schema-type folder:
 
 ## Authors
 
-This project was developed as part of an IBM Starship internship at the **Cyber Security of Excellence (CSOE)** lab in **Beer Sheva**.
+This project was developed as part of an IBM Starship internship at the **Cyber Security Center of Excellence (CCoE)** lab in **Beer Sheva**.
 
 - **Meshi Levi** – [@MeshiLevi](https://github.com/MeshiLevi)
 - **Itay Segal** – [@IttaySegal](https://github.com/IttaySegal)
